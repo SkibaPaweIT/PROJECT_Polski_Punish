@@ -1,5 +1,8 @@
 package pl.skiba.tekkenrankings.polskipunish.models;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,24 +11,27 @@ public class TournamentParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int placement;
+    @CsvBindByName(column = "Miejsce")
+    private String placement;
+    @CsvBindByName(column = "Zawodnik")
     private String player;
-    private int points;
+    @CsvBindByName(column = "Punkty")
+    private String points;
 
     public TournamentParticipant() {
     }
 
-    public TournamentParticipant(int placement, String player, int points) {
+    public TournamentParticipant(String placement, String player, String points) {
         this.placement = placement;
         this.player = player;
         this.points = points;
     }
 
-    public int getPlacement() {
+    public String getPlacement() {
         return placement;
     }
 
-    public void setPlacement(int placement) {
+    public void setPlacement(String placement) {
         this.placement = placement;
     }
 
@@ -45,11 +51,11 @@ public class TournamentParticipant {
         this.player = player;
     }
 
-    public int getPoints() {
+    public String getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(String points) {
         this.points = points;
     }
 }
