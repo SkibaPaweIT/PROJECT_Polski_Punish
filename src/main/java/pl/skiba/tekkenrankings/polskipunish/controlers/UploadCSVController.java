@@ -12,6 +12,8 @@ import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.tournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.repo.TournamentRepo;
+import pl.skiba.tekkenrankings.polskipunish.services.GameService;
+import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,10 +23,12 @@ import java.util.List;
 @Controller
 public class UploadCSVController {
 
-    TournamentRepo tournamentRepo;
+    TournamentService tournamentService;
+    GameService gameService;
 
-    public UploadCSVController(TournamentRepo tournamentRepo) {
-        this.tournamentRepo = tournamentRepo;
+    public UploadCSVController(TournamentService tournamentService, GameService gameService) {
+        this.tournamentService = tournamentService;
+        this.gameService = gameService;
     }
 
     @GetMapping("/csv")
@@ -33,9 +37,10 @@ public class UploadCSVController {
     }
 
     @PostMapping("/upload-csv")
-    public String uploadCSVFile(@RequestParam("file") MultipartFile file, @RequestParam("name") String name , Model model){
-
-
+    public String uploadCSVFile(@RequestParam("file") MultipartFile file,
+                                @RequestParam("name") String name,
+                                @RequestParam("gamename") String gamename ,
+                                Model model){
 
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
@@ -48,8 +53,8 @@ public class UploadCSVController {
 
             // convert `CsvToBean` object to list of users
             List<TournamentParticipant> users = csvToBean.parse();
-            Tournament tournament = new Tournament(name,tournamentCategoryEnum.Offline,users);
-            tournamentRepo.save(tournament);
+            Tournament tournament = new Tournament(name,tournamentCategoryEnum.Offline,gameService.getGameByName(gamename),users);
+            tournamentService.save(tournament);
 
 
 

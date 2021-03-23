@@ -10,8 +10,11 @@
 <form method="POST" th:action="@{/upload-csv}" enctype="multipart/form-data">
     <div class="form-group mt-3">
         <label for="file">Select a CSV file</label>
+        Jaka gra:  <input type="text" name="gamename" id="gamename">
         Daj plik CSV:  <input type="file" name="file" class="form-control-file" id="file" accept=".csv"><br>
         Daj nazwe turniejuf: <input type="text" name="name" id="name"><br>
+
+
     </div>
     <button type="submit" class="btn btn-primary">Import Users</button>
 </form>
