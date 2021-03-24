@@ -9,7 +9,6 @@ import pl.skiba.tekkenrankings.polskipunish.repo.GameRepo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GameService {
@@ -21,7 +20,7 @@ public class GameService {
     }
 
     public Game getGameByName(String gameName){
-        return gameRepo.findByGameName(gameName).get();
+        return gameRepo.findByGameName(gameName).orElse(null);
     }
 
 
@@ -31,6 +30,5 @@ public class GameService {
 //        List<Tournament> list = new ArrayList<Tournament>();
 //        gameRepo.save(new Game("Tekken 7", list ));
 //        gameRepo.save(new Game("Soul Calibur 6", list ));
-//        gameRepo.save(new Game("Street Fighter 5", list ));
-//    }
+//        gameRepo.save(new Game("Street Fighter 5", list ));//   }
 }

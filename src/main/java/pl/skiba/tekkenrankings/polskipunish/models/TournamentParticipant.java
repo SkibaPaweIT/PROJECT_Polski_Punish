@@ -11,17 +11,17 @@ public class TournamentParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @CsvBindByName(column = "Miejsce")
     private String placement;
-    @CsvBindByName(column = "Zawodnik")
-    private String player;
-    @CsvBindByName(column = "Punkty")
-    private String points;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "player_id")
+    private Player player;
+    private int points;
 
     public TournamentParticipant() {
     }
 
-    public TournamentParticipant(String placement, String player, String points) {
+    public TournamentParticipant(String placement, Player player, int points) {
         this.placement = placement;
         this.player = player;
         this.points = points;
@@ -43,19 +43,19 @@ public class TournamentParticipant {
         this.id = id;
     }
 
-    public String getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(String player) {
-        this.player = player;
-    }
-
-    public String getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(String points) {
+    public void setPoints(int points) {
         this.points = points;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

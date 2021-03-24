@@ -10,11 +10,14 @@ import java.util.List;
 @Entity
 public class Tournament {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String tournamentName;
+
+    @Enumerated(EnumType.STRING)
     private tournamentCategoryEnum tournamentCategory;
 
     @JsonIgnore
