@@ -1,12 +1,14 @@
 package pl.skiba.tekkenrankings.polskipunish.repo;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
 
 import java.util.List;
-
 
 @Repository
 public interface PlayerRepo extends JpaRepository<Player,Long> {
@@ -15,10 +17,14 @@ public interface PlayerRepo extends JpaRepository<Player,Long> {
 
     Player getByName(String name);
 
-    @Query("Select p.name, p.offlinePoints from Player p order by p.offlinePoints desc")
-    List<String> findAllOffline();
+    //@Query("Select p.name, p.offlinePoints from Player p order by p.offlinePoints desc")
 
-    @Query("Select p.name, p.onlinePoints from Player p order by p.onlinePoints desc")
-    List<String> findAllOnline();
+
+    Iterable<OfflineRanking> findAllProjectedBy(Sort sort);
+
+    Iterable<OnlineRanking> findAllBy(Sort sort);
+
+    //@Query("Select p.name, p.onlinePoints from Player p order by p.onlinePoints desc")
+    //List<String> findAllOnline();
 
 }

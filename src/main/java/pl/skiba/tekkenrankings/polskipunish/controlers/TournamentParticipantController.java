@@ -17,11 +17,6 @@ public class TournamentParticipantController {
         this.tournamentParticipantService = tournamentParticipantService;
     }
 
-    @GetMapping("/all")
-    public Iterable<TournamentParticipant> getAll() {
-        return tournamentParticipantService.findALl();
-    }
-
     @GetMapping
     public Iterable<String> getPlayerTournaments(@RequestParam String name) {
         return tournamentParticipantService.getPlayerTournamnets(name);

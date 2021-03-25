@@ -5,6 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.skiba.tekkenrankings.polskipunish.models.Game;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.tournamentCategoryEnum;
@@ -28,8 +29,8 @@ public class TournamentService {
         return tournamentRepo.findAll();
     }
 
-    public Iterable<String> findAllNames() {
-        return tournamentRepo.findAllNames();
+    public Iterable<TournamentNames> findAllNames() {
+        return tournamentRepo.findAllBy();
     }
 
     public Iterable<String> findAllTournamentsToGame(String gameName){

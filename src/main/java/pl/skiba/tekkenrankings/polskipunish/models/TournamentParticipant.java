@@ -1,5 +1,6 @@
 package pl.skiba.tekkenrankings.polskipunish.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
@@ -10,6 +11,7 @@ public class TournamentParticipant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String placement;
     private int points;

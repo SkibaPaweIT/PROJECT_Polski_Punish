@@ -3,7 +3,10 @@ package pl.skiba.tekkenrankings.polskipunish.controlers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
+import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.services.PlayerService;
 
 import java.util.List;
@@ -19,12 +22,17 @@ public class PlayerController {
     }
 
     @GetMapping("/offline-ranking")
-    public List<String> getOfflineRanking(){
+    public Iterable<OfflineRanking> getOfflineRanking(){
         return playerService.getOfflineRanking();
     }
 
     @GetMapping("/online-ranking")
-    public List<String> getOnlineRanking(){
+    public Iterable<OnlineRanking> getOnlineRanking(){
         return playerService.getOnlineRanking();
+    }
+
+    @GetMapping("/all")
+    public Iterable<Player> getAll() {
+        return playerService.findAll();
     }
 }
