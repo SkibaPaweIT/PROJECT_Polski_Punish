@@ -27,8 +27,7 @@ public class Tournament {
 
 
     @JsonIgnore
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "tournament_id")
+    @OneToMany(cascade = {CascadeType.ALL} , mappedBy="tournament")
     private List<TournamentParticipant> participants;
 
     public Tournament(String tournamentName, tournamentCategoryEnum tournamentCategory, Game game, List<TournamentParticipant> participants) {
@@ -39,6 +38,12 @@ public class Tournament {
     }
 
     public Tournament() {
+    }
+
+    public Tournament(String tournamentName, tournamentCategoryEnum tournamentCategory, Game game) {
+        this.tournamentName = tournamentName;
+        this.tournamentCategory = tournamentCategory;
+        this.game = game;
     }
 
     public Game getGame() {

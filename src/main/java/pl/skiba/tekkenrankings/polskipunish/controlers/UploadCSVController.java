@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import pl.skiba.tekkenrankings.polskipunish.models.*;
-import pl.skiba.tekkenrankings.polskipunish.repo.TournamentRepo;
 import pl.skiba.tekkenrankings.polskipunish.services.GameService;
 import pl.skiba.tekkenrankings.polskipunish.services.PlayerService;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
@@ -56,13 +55,12 @@ public class UploadCSVController {
 
             List<CSVTournamentDTO> tournamentPlayers = csvToBean.parse();
             List<TournamentParticipant> participants = new ArrayList<>();
+            Tournament tournament = new Tournament(name,tournamentType,gameService.getGameByName(gamename),participants);
+            tournamentService.save(tournament);
             tournamentPlayers.forEach(tournamentPlayer -> {
                 if(playerService.ifExists(tournamentPlayer.getPlayer())){
+
                     Player selectedPlayer = playerService.getByName(tournamentPlayer.getPlayer());
-                    participants.add(new TournamentParticipant(
-                            tournamentPlayer.getPlacement(),
-                            selectedPlayer,
-                            tournamentPlayer.getPoints()));
 
                     if(tournamentType == tournamentCategoryEnum.Offline){
                         selectedPlayer.setOfflinePoints(tournamentPlayer.getPoints()+selectedPlayer.getOfflinePoints());
@@ -73,26 +71,34 @@ public class UploadCSVController {
                         selectedPlayer.setOnlinePoints(tournamentPlayer.getPoints()+selectedPlayer.getOnlinePoints());
                         playerService.save(selectedPlayer);
                     }
+
+                    participants.add(new TournamentParticipant(
+                            tournamentPlayer.getPlacement(),
+                            tournamentPlayer.getPoints(),
+                            selectedPlayer,
+                            tournament));
                 }
                 else{
-                        Player newPlayer = new Player(tournamentPlayer.getPlayer());
+                    Player newPlayer = new Player(tournamentPlayer.getPlayer());
                     if(tournamentType == tournamentCategoryEnum.Offline){
                         newPlayer.setOfflinePoints(tournamentPlayer.getPoints()+newPlayer.getOfflinePoints());
                         playerService.save(newPlayer);
-                        participants.add(new TournamentParticipant(
-                                tournamentPlayer.getPlacement(),
-                                newPlayer,
-                                tournamentPlayer.getPoints()));
                     }
                     else
                     {
                         newPlayer.setOnlinePoints(tournamentPlayer.getPoints()+newPlayer.getOnlinePoints());
                         playerService.save(newPlayer);
                     }
+
+                    participants.add(new TournamentParticipant(
+                            tournamentPlayer.getPlacement(),
+                            tournamentPlayer.getPoints(),
+                            newPlayer,
+                            tournament));
                 }
 
             });
-            Tournament tournament = new Tournament(name,tournamentType,gameService.getGameByName(gamename),participants);
+            tournament.setParticipants(participants);
             tournamentService.save(tournament);
 
 

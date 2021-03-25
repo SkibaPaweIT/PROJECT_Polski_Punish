@@ -12,19 +12,26 @@ public class TournamentParticipant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String placement;
+    private int points;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "player_id")
     private Player player;
-    private int points;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="tournament_id" , nullable = true)
+    private Tournament tournament;
+
+
 
     public TournamentParticipant() {
     }
 
-    public TournamentParticipant(String placement, Player player, int points) {
+    public TournamentParticipant(String placement, int points, Player player, Tournament tournament) {
         this.placement = placement;
-        this.player = player;
         this.points = points;
+        this.player = player;
+        this.tournament = tournament;
     }
 
     public String getPlacement() {

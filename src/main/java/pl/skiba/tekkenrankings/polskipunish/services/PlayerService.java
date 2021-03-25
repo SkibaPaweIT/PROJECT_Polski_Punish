@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
 import pl.skiba.tekkenrankings.polskipunish.repo.PlayerRepo;
 
+import java.util.List;
+
 @Service
 public class PlayerService {
 
@@ -23,5 +25,13 @@ public class PlayerService {
 
     public Player save(Player player){
         return playerRepo.save(player);
+    }
+
+    public List<String> getOfflineRanking(){
+        return playerRepo.findAllOffline();
+    }
+
+    public List<String> getOnlineRanking(){
+        return playerRepo.findAllOnline();
     }
 }

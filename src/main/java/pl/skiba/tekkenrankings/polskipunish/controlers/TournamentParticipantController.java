@@ -2,6 +2,7 @@ package pl.skiba.tekkenrankings.polskipunish.controlers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentParticipantService;
@@ -19,5 +20,10 @@ public class TournamentParticipantController {
     @GetMapping("/all")
     public Iterable<TournamentParticipant> getAll() {
         return tournamentParticipantService.findALl();
+    }
+
+    @GetMapping
+    public Iterable<String> getPlayerTournaments(@RequestParam String name) {
+        return tournamentParticipantService.getPlayerTournamnets(name);
     }
 }

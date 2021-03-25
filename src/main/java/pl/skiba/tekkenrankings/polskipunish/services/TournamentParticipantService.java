@@ -29,4 +29,9 @@ public class TournamentParticipantService {
         return tournamentParticipantRepo.findTournamentParticipantByPlayer(name);
     }
 
+    public Iterable<String> getPlayerTournamnets (String name){
+        return tournamentParticipantRepo.findAllPlayerTournamentsByPlayerName(name);
+    }
+
+
 }
