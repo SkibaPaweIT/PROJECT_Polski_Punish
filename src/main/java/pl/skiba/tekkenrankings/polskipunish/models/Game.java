@@ -1,7 +1,5 @@
 package pl.skiba.tekkenrankings.polskipunish.models;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
 import java.util.List;
 

@@ -1,35 +1,28 @@
 package pl.skiba.tekkenrankings.polskipunish.controlers;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pl.skiba.tekkenrankings.polskipunish.models.*;
-import pl.skiba.tekkenrankings.polskipunish.services.GameService;
-import pl.skiba.tekkenrankings.polskipunish.services.PlayerService;
-import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
+import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
+import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
+import pl.skiba.tekkenrankings.polskipunish.models.Enums.tournamentCategoryEnum;
+import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.services.UploadCSVService;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class UploadCSVController {
 
-    TournamentService tournamentService;
-    GameService gameService;
-    PlayerService playerService;
+    UploadCSVService uploadCSVService;
 
-    public UploadCSVController(TournamentService tournamentService, GameService gameService, PlayerService playerService) {
-        this.tournamentService = tournamentService;
-        this.gameService = gameService;
-        this.playerService = playerService;
+    public UploadCSVController(UploadCSVService uploadCSVService) {
+        this.uploadCSVService = uploadCSVService;
     }
 
     @GetMapping("/csv")
@@ -37,79 +30,17 @@ public class UploadCSVController {
         return "csv-file-upload";
     }
 
-    @PostMapping("/upload-csv")
+    @GetMapping("/upload-csv")
     public String uploadCSVFile(@RequestParam("file") MultipartFile file,
                                 @RequestParam("name") String name,
                                 @RequestParam("gamename") String gamename ,
-                                @RequestParam("tournamentType") tournamentCategoryEnum tournamentType,
-                                Model model){
-
-        try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-
-            // create csv bean reader
-            CsvToBean<CSVTournamentDTO> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVTournamentDTO.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withSeparator(';')
-                    .build();
-
-            List<CSVTournamentDTO> tournamentPlayers = csvToBean.parse();
-            List<TournamentParticipant> participants = new ArrayList<>();
-            Tournament tournament = new Tournament(name,tournamentType,gameService.getGameByName(gamename),participants);
-            tournamentService.save(tournament);
-            tournamentPlayers.forEach(tournamentPlayer -> {
-                if(playerService.ifExists(tournamentPlayer.getPlayer())){
-
-                    Player selectedPlayer = playerService.getByName(tournamentPlayer.getPlayer());
-
-                    if(tournamentType == tournamentCategoryEnum.Offline){
-                        selectedPlayer.setOfflinePoints(tournamentPlayer.getPoints()+selectedPlayer.getOfflinePoints());
-                        playerService.save(selectedPlayer);
-                    }
-                    else
-                    {
-                        selectedPlayer.setOnlinePoints(tournamentPlayer.getPoints()+selectedPlayer.getOnlinePoints());
-                        playerService.save(selectedPlayer);
-                    }
-
-                    participants.add(new TournamentParticipant(
-                            tournamentPlayer.getPlacement(),
-                            tournamentPlayer.getPoints(),
-                            selectedPlayer,
-                            tournament));
-                }
-                else{
-                    Player newPlayer = new Player(tournamentPlayer.getPlayer());
-                    if(tournamentType == tournamentCategoryEnum.Offline){
-                        newPlayer.setOfflinePoints(tournamentPlayer.getPoints()+newPlayer.getOfflinePoints());
-                        playerService.save(newPlayer);
-                    }
-                    else
-                    {
-                        newPlayer.setOnlinePoints(tournamentPlayer.getPoints()+newPlayer.getOnlinePoints());
-                        playerService.save(newPlayer);
-                    }
-
-                    participants.add(new TournamentParticipant(
-                            tournamentPlayer.getPlacement(),
-                            tournamentPlayer.getPoints(),
-                            newPlayer,
-                            tournament));
-                }
-
-            });
-            tournament.setParticipants(participants);
-            tournamentService.save(tournament);
+                                @RequestParam("tournamentType") tournamentCategoryEnum tournamentType){
 
 
-
-            model.addAttribute("players", tournamentPlayers);
-            model.addAttribute("status", true);
-
-        } catch (Exception ex) {
-            model.addAttribute("message", "An error occurred while processing the CSV file.");
-            model.addAttribute("status", false);
-        }
+            MyModelMapper myModelMapper = new MyModelMapper();
+            List<CSVTournamentDTO> tournamentPlayers = uploadCSVService.UploadPlayersToCSV(file);
+            List<TournamentParticipant> participants = myModelMapper.modelMapper.map(tournamentPlayers , new TypeToken<List<TournamentParticipant>>() {}.getType());
+            Tournament tournament = uploadCSVService.CreateTournamentFromCSV(name,gamename,tournamentType,participants);
 
         return "csv-file-upload";
     }

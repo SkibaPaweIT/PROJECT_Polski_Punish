@@ -2,12 +2,10 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
-import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
 import pl.skiba.tekkenrankings.polskipunish.repo.PlayerRepo;
-
-import java.util.List;
 
 @Service
 public class PlayerService {

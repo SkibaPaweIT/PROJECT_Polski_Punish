@@ -1,8 +1,6 @@
 package pl.skiba.tekkenrankings.polskipunish.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
 
 import javax.persistence.*;
 
@@ -24,8 +22,6 @@ public class TournamentParticipant {
     @JoinColumn(name="tournament_id" , nullable = true)
     private Tournament tournament;
 
-
-
     public TournamentParticipant() {
     }
 
@@ -33,6 +29,14 @@ public class TournamentParticipant {
         this.placement = placement;
         this.points = points;
         this.player = player;
+        this.tournament = tournament;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
 

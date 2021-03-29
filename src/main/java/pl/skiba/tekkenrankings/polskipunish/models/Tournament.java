@@ -2,7 +2,7 @@ package pl.skiba.tekkenrankings.polskipunish.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import pl.skiba.tekkenrankings.polskipunish.models.Enums.tournamentCategoryEnum;
 
 import javax.persistence.*;
 import java.util.List;

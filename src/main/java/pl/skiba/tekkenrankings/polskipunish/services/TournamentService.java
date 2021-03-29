@@ -1,18 +1,11 @@
 package pl.skiba.tekkenrankings.polskipunish.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import pl.skiba.tekkenrankings.polskipunish.models.Game;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
-import pl.skiba.tekkenrankings.polskipunish.models.tournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.repo.TournamentRepo;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 
 @Service

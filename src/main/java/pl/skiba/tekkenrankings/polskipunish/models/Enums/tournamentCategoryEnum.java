@@ -1,4 +1,4 @@
-package pl.skiba.tekkenrankings.polskipunish.models;
+package pl.skiba.tekkenrankings.polskipunish.models.Enums;
 
 public enum tournamentCategoryEnum {
 

@@ -23,11 +23,11 @@ public class GameService {
         return gameRepo.findByGameName(gameName).orElse(null);
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void fillDB() {
-//        List<Tournament> list = new ArrayList<Tournament>();
-//        gameRepo.save(new Game("Tekken 7", list));
-//        gameRepo.save(new Game("Soul Calibur 6", list));
-//        gameRepo.save(new Game("Street Fighter 5", list));//   }
-//    }
+    @EventListener(ApplicationReadyEvent.class)
+    public void fillDB() {
+        List<Tournament> list = new ArrayList<Tournament>();
+        gameRepo.save(new Game("Tekken 7", list));
+        gameRepo.save(new Game("Soul Calibur 6", list));
+        gameRepo.save(new Game("Street Fighter 5", list));
+    }
 }
