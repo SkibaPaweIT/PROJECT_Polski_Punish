@@ -11,7 +11,11 @@ Recent Utilities:
   -Player list with Offline and Online Rankings (Players are unique and added after adding new tournament with new unique participants)
   -Added some bonus endpoints like getting certain player tournament data
   -Added Dockerfile with Docker Hub repo. It can autobuild images from git. 
+  -Adding Tournaments and participants from csv files)
+  -Adding Tournaments and particiapants from challonge.com api
   
   
   next target - Adding Tournaments and participants from csv files)
+  -Learning new tools like mapper, docker.
+  -Adding Tournaments and participants from smash.gg api
   
