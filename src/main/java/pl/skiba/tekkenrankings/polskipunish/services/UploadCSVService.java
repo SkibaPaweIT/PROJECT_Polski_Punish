@@ -4,9 +4,8 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
-import pl.skiba.tekkenrankings.polskipunish.models.Enums.tournamentCategoryEnum;
+import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 
@@ -50,7 +49,7 @@ public class UploadCSVService {
 
     }
 
-    public Tournament CreateTournamentFromCSV(String name, String gamename , tournamentCategoryEnum tournamentType , List<TournamentParticipant> participants){
+    public Tournament CreateTournamentFromCSV(String name, String gamename , TournamentCategoryEnum tournamentType , List<TournamentParticipant> participants){
         Tournament tournament = new Tournament(name,tournamentType,gameService.getGameByName(gamename),participants);
 
         participants.forEach(tournamentPlayer -> {
@@ -62,7 +61,7 @@ public class UploadCSVService {
                 tournamentPlayer.setPlayer(playerService.getByName(tournamentPlayer.getPlayer().getName()));
             }
 
-            if(tournamentType == tournamentCategoryEnum.Offline){
+            if(tournamentType == TournamentCategoryEnum.Offline){
                 tournamentPlayer.getPlayer().setOfflinePoints(tournamentPlayer.getPoints()+pointsContainer);
             }
             else {

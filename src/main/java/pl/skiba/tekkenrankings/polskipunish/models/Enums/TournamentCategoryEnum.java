@@ -1,6 +1,6 @@
 package pl.skiba.tekkenrankings.polskipunish.models.Enums;
 
-public enum tournamentCategoryEnum {
+public enum TournamentCategoryEnum {
 
     Offline,Online;
 }

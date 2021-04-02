@@ -75,12 +75,6 @@
             <version>2.3.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>at.stefangeyer.challonge</groupId>
-            <artifactId>core</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
@@ -97,6 +91,7 @@
 
 
     </dependencies>
+
 
     <build>
         <plugins>

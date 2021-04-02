@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentPointsEnum;
-import pl.skiba.tekkenrankings.polskipunish.models.Enums.tournamentCategoryEnum;
+import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 
@@ -24,12 +24,10 @@ public class ChallongeService {
 
     private PlayerService playerService;
     private GameService gameService;
-    private TournamentService tournamentService;
 
-    public ChallongeService(PlayerService playerService, GameService gameService , TournamentService tournamentService) {
+    public ChallongeService(PlayerService playerService, GameService gameService) {
         this.playerService = playerService;
         this.gameService = gameService;
-        this.tournamentService = tournamentService;
     }
 
     public List<ChallongeParticipant> makeChallongeParticipantsList(String url) throws IOException {
@@ -65,7 +63,7 @@ public class ChallongeService {
         return participantList;
     }
 
-    public Tournament getTourmanetFromChallonge(List<TournamentParticipant> participantList, tournamentCategoryEnum tournamentType , String tournamentName, String gamename) {
+    public Tournament getTourmanetFromParticipantList(List<TournamentParticipant> participantList, TournamentCategoryEnum tournamentType , String tournamentName, String gamename) {
         Tournament tournament = new Tournament(tournamentName,tournamentType, gameService.getGameByName(gamename), participantList);
         participantList.forEach(element -> {
             element.setTournament(tournament);
@@ -76,7 +74,7 @@ public class ChallongeService {
 
             if(parseInt(element.getPlacement()) <=9)
             {
-                if (tournamentType == tournamentCategoryEnum.Offline) {
+                if (tournamentType == TournamentCategoryEnum.Offline) {
                     element.setPoints(TournamentPointsEnum.valueOf(parseInt(element.getPlacement())).getPoints());
                     player.setOfflinePoints(element.getPoints() + player.getOfflinePoints());
 
@@ -90,7 +88,6 @@ public class ChallongeService {
 
         });
         tournament.setParticipants(participantList);
-        tournamentService.save(tournament);
         return tournament;
     }
 }

@@ -2,7 +2,7 @@ package pl.skiba.tekkenrankings.polskipunish.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import pl.skiba.tekkenrankings.polskipunish.models.Enums.tournamentCategoryEnum;
+import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +18,7 @@ public class Tournament {
     private String tournamentName;
 
     @Enumerated(EnumType.STRING)
-    private tournamentCategoryEnum tournamentCategory;
+    private TournamentCategoryEnum tournamentCategory;
 
     @JsonIgnore
     @ManyToOne
@@ -30,7 +30,7 @@ public class Tournament {
     @OneToMany(cascade = {CascadeType.ALL} , mappedBy="tournament")
     private List<TournamentParticipant> participants;
 
-    public Tournament(String tournamentName, tournamentCategoryEnum tournamentCategory, Game game, List<TournamentParticipant> participants) {
+    public Tournament(String tournamentName, TournamentCategoryEnum tournamentCategory, Game game, List<TournamentParticipant> participants) {
         this.tournamentName = tournamentName;
         this.tournamentCategory = tournamentCategory;
         this.game = game;
@@ -40,7 +40,7 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament(String tournamentName, tournamentCategoryEnum tournamentCategory, Game game) {
+    public Tournament(String tournamentName, TournamentCategoryEnum tournamentCategory, Game game) {
         this.tournamentName = tournamentName;
         this.tournamentCategory = tournamentCategory;
         this.game = game;
@@ -70,11 +70,11 @@ public class Tournament {
         this.tournamentName = tournamentName;
     }
 
-    public tournamentCategoryEnum getTournamentCategory() {
+    public TournamentCategoryEnum getTournamentCategory() {
         return tournamentCategory;
     }
 
-    public void setTournamentCategory(tournamentCategoryEnum tournamentCategory) {
+    public void setTournamentCategory(TournamentCategoryEnum tournamentCategory) {
         this.tournamentCategory = tournamentCategory;
     }
 

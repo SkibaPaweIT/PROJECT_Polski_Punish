@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1> Upload csv file</h1>
+<form method="GET" th:action="@{/api/smash/tournament}" enctype="multipart/form-data">
+    <div class="form-group mt-3">
+        Jaka gra:  <input type="text" name="gamename" id="gamename"><br>
+        offline czy online?  <input type="text" name="tournamentType" id="tournamentType"><br>
+        Daj nazwe tuniejów: <input type="text" name="tournamentName" id="tournamentName"><br>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Import Users</button>
+</form>
+
+</body>
+</html>

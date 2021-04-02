@@ -6,6 +6,7 @@ import org.modelmapper.spi.MappingContext;
 import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
 import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
+import pl.skiba.tekkenrankings.polskipunish.models.SmashModels.SmashNodes;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 
 public class MyModelMapper {
@@ -16,6 +17,7 @@ public class MyModelMapper {
         this.modelMapper = new ModelMapper();
         modelMapper.addConverter(CSVParticipantToTournamentParticipant);
         modelMapper.addConverter(ChallongeParticipantToTournamentParticipant);
+        modelMapper.addConverter(SmashNodeToTournamentParticipant);
     }
 
     Converter<CSVTournamentDTO, TournamentParticipant> CSVParticipantToTournamentParticipant = new Converter<>() {
@@ -34,6 +36,16 @@ public class MyModelMapper {
             TournamentParticipant tournamentParticipant = new TournamentParticipant();
             tournamentParticipant.setPlayer(new Player(mappingContext.getSource().getName()));
             tournamentParticipant.setPlacement(mappingContext.getSource().getPlacementToString());
+            return tournamentParticipant;
+        }
+    };
+
+    Converter<SmashNodes, TournamentParticipant> SmashNodeToTournamentParticipant = new Converter<>() {
+        @Override
+        public TournamentParticipant convert(MappingContext<SmashNodes, TournamentParticipant> mappingContext) {
+            TournamentParticipant tournamentParticipant = new TournamentParticipant();
+            tournamentParticipant.setPlacement(mappingContext.getSource().getPlacementToString());
+            tournamentParticipant.setPlayer(new Player(mappingContext.getSource().getEntrant().getName()));
             return tournamentParticipant;
         }
     };
