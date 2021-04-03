@@ -26,7 +26,6 @@ public class Tournament {
     private Game game;
 
 
-    @JsonIgnore
     @OneToMany(cascade = {CascadeType.ALL} , mappedBy="tournament")
     private List<TournamentParticipant> participants;
 

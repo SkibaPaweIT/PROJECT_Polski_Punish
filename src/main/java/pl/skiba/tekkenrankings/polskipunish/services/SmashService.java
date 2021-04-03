@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.skiba.tekkenrankings.polskipunish.exceptions.TournamentNotFoundException;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.SmashModels.SmashNodes;
@@ -63,7 +64,12 @@ public class SmashService {
         HttpEntity<String> request = new HttpEntity<>(jsonObject.toString(), headers);
         String jsonStringStr = restTemplate.postForObject(smash_api_url, request , String.class);
 
-        return objectMapper.readTree(jsonStringStr);
+        JsonNode node= objectMapper.readTree(jsonStringStr);
+        if(node.at("/data/tournament/").toString()== "")
+        {
+            throw new TournamentNotFoundException(slug);
+        }
+        return node;
 
 
     }

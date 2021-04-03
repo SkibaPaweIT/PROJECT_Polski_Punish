@@ -1,9 +1,15 @@
 package pl.skiba.tekkenrankings.polskipunish.controlers;
 
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import pl.skiba.tekkenrankings.polskipunish.exceptions.TournamentNotFoundException;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/tournament")
@@ -14,6 +20,12 @@ public class TournamentController {
     public TournamentController(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
+
+    @GetMapping(value="/{id}")
+    public Tournament findById(@PathVariable("id") Long id , HttpServletResponse response){
+            return tournamentService.findById(id).orElseThrow(()->new TournamentNotFoundException(id) );
+    }
+
 
     @GetMapping("/all")
     public Iterable<Tournament> getAll(){

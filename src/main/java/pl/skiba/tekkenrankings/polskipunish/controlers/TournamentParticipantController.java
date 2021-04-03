@@ -20,4 +20,6 @@ public class TournamentParticipantController {
     public Iterable<String> getPlayerTournaments(@RequestParam String name) {
         return tournamentParticipantService.getPlayerTournamnets(name);
     }
+
+
 }

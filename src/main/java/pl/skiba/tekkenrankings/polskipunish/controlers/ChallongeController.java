@@ -44,7 +44,7 @@ public class ChallongeController {
                                                                  @RequestParam String gamename) throws IOException {
         MyModelMapper myModelMapper = new MyModelMapper();
         String url= "https://api.challonge.com/v1/tournaments/" + tournamentName + "/participants.json?api_key=" + challonge_api_key;
-        List<ChallongeParticipant> participantList = challongeService.makeChallongeParticipantsList(url);
+        List<ChallongeParticipant> participantList = challongeService.makeChallongeParticipantsList(url, tournamentName);
         List<TournamentParticipant> participants = myModelMapper.modelMapper.map(participantList,  new TypeToken<List<TournamentParticipant>>() {}.getType());
         Tournament tournament= challongeService.getTourmanetFromParticipantList(participants , tournamentType, tournamentName , gamename);
         tournamentService.save(tournament);

@@ -11,13 +11,15 @@ public class TournamentParticipant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    private String placement;
-    private int points;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "player_id")
     private Player player;
 
+    private String placement;
+    private int points;
+
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="tournament_id" , nullable = true)
     private Tournament tournament;
@@ -25,7 +27,7 @@ public class TournamentParticipant {
     public TournamentParticipant() {
     }
 
-    public TournamentParticipant(String placement, int points, Player player, Tournament tournament) {
+    public TournamentParticipant(Player player,String placement, int points, Tournament tournament) {
         this.placement = placement;
         this.points = points;
         this.player = player;

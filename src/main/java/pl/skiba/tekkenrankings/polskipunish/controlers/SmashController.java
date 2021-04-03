@@ -40,6 +40,7 @@ public class SmashController {
 
         JsonNode root = smashService.getSmashTournamentFromHttpRequest(slug,query);
         Tournament tournament= smashService.getTournament(root ,tournamentName, tournamentType, gamename );
+
         tournamentService.save(tournament);
 
         return "smash-upload";

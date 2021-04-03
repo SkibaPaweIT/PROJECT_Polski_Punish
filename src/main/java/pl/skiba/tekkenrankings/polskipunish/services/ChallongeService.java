@@ -30,11 +30,11 @@ public class ChallongeService {
         this.gameService = gameService;
     }
 
-    public List<ChallongeParticipant> makeChallongeParticipantsList(String url) throws IOException {
+    public List<ChallongeParticipant> makeChallongeParticipantsList(String url, String tournamentname) throws IOException {
 
         List<ChallongeParticipant> participantList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        JSONArray response = JsonReader.readJsonFromUrl(url);
+        JSONArray response = JsonReader.readJsonFromUrl(url , tournamentname);
 
         response.forEach(element -> {
             JSONObject obj = (JSONObject) element;
