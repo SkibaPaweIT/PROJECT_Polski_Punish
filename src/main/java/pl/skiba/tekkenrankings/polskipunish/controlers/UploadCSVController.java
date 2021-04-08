@@ -3,6 +3,7 @@ package pl.skiba.tekkenrankings.polskipunish.controlers;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
@@ -15,6 +16,7 @@ import pl.skiba.tekkenrankings.polskipunish.services.UploadCSVService;
 import java.util.List;
 
 @Controller
+@RequestMapping("/api/admin")
 public class UploadCSVController {
 
     UploadCSVService uploadCSVService;

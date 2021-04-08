@@ -7,6 +7,8 @@ import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
 import pl.skiba.tekkenrankings.polskipunish.repo.PlayerRepo;
 
+import java.util.Optional;
+
 @Service
 public class PlayerService {
 
@@ -20,8 +22,12 @@ public class PlayerService {
         return playerRepo.existsByName(name);
     }
 
-    public Player getByName(String name){
+    public Optional<Player> getByName(String name){
         return playerRepo.getByName(name);
+    }
+
+    public Optional<Player> getById(Long id){
+        return playerRepo.getById(id);
     }
 
     public Player save(Player player){

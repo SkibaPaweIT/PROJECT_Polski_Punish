@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class TournamentNotFoundAdvice {
+public class ControllerExceptionAdvice {
 
     @ResponseBody
     @ExceptionHandler(TournamentNotFoundException.class)
@@ -15,5 +15,10 @@ public class TournamentNotFoundAdvice {
     public String tournamentNotFoundHandler(TournamentNotFoundException ex) {
         return ex.getMessage();
     }
+
+    @ResponseBody
+    @ExceptionHandler(PlayerNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String playerNotFoundHandler(PlayerNotFoundException ex) {return ex.getMessage();}
 
 }

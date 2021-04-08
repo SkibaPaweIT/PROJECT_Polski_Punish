@@ -9,13 +9,16 @@ import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlayerRepo extends JpaRepository<Player,Long> {
 
     boolean existsByName(String name);
 
-    Player getByName(String name);
+    Optional<Player> getByName(String name);
+
+    Optional<Player> getById(Long id);
 
     //@Query("Select p.name, p.offlinePoints from Player p order by p.offlinePoints desc")
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
@@ -13,6 +14,7 @@ import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 import java.io.IOException;
 
 @Controller
+@RequestMapping("/api/admin")
 public class SmashController {
 
 
@@ -24,12 +26,12 @@ public class SmashController {
         this.tournamentService = tournamentService;
     }
 
-    @GetMapping("/api/smash")
+    @GetMapping("/smash")
     public String SmashUpload(Model model){
         return "smash-upload";
     }
 
-    @GetMapping("/api/smash/tournament")
+    @GetMapping("/smash/tournament")
     public String GetSmashTournament(@RequestParam String tournamentName,
                            @RequestParam TournamentCategoryEnum tournamentType ,
                            @RequestParam String gamename) throws IOException {

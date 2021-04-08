@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
@@ -19,6 +20,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("/api/admin")
 public class ChallongeController {
 
 
@@ -33,12 +35,12 @@ public class ChallongeController {
     @Value("${challonge_api_key}")
     private String challonge_api_key;
 
-    @GetMapping("/api/challonge")
+    @GetMapping("/challonge")
     public String challongeUpload(Model model){
         return "challonge-upload";
     }
 
-    @GetMapping("/api/challonge/tournament")
+    @GetMapping("/challonge/tournament")
     public String getTournamentFromChallonge(@RequestParam String tournamentName,
                                                                  @RequestParam TournamentCategoryEnum tournamentType ,
                                                                  @RequestParam String gamename) throws IOException {

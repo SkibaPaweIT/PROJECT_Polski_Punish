@@ -21,8 +21,8 @@ public class TournamentParticipantService {
         return tournamentParticipantRepo.findAll();
     }
 
-    public Optional<TournamentParticipant> findByPlace(long id){
-        return tournamentParticipantRepo.findById(id);
+    public Optional<TournamentParticipant> findByPlace(long placement){
+        return tournamentParticipantRepo.findById(placement);
     }
 
     public Optional<TournamentParticipant> findByName (String name){

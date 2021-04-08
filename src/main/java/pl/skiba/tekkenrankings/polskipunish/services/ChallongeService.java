@@ -69,7 +69,7 @@ public class ChallongeService {
             element.setTournament(tournament);
             Player player = element.getPlayer();
             if (playerService.ifExists(element.getPlayer().getName())) {
-                player = playerService.getByName(element.getPlayer().getName());
+                player = playerService.getByName(element.getPlayer().getName()).orElseThrow(); //Don't need handle exceptions because of if statement
             }
 
             if(parseInt(element.getPlacement()) <=9)
