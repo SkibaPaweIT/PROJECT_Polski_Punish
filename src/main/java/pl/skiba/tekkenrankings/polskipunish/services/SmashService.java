@@ -18,6 +18,7 @@ import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.SmashModels.SmashNodes;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,7 +66,8 @@ public class SmashService {
         String jsonStringStr = restTemplate.postForObject(smash_api_url, request , String.class);
 
         JsonNode node= objectMapper.readTree(jsonStringStr);
-        if(node.at("/data/tournament/").toString()== "")
+        List<JsonNode> check = node.at("/data/tournament").findValues("name");
+        if(check.isEmpty())
         {
             throw new TournamentNotFoundException(slug);
         }
