@@ -72,14 +72,14 @@ public class ChallongeService {
                 player = playerService.getByName(element.getPlayer().getName()).orElseThrow(); //Don't need handle exceptions because of if statement
             }
 
-            if(parseInt(element.getPlacement()) <=9)
+            if(element.getPlacement() <=9)
             {
                 if (tournamentType == TournamentCategoryEnum.Offline) {
-                    element.setPoints(TournamentPointsEnum.valueOf(parseInt(element.getPlacement())).getPoints());
+                    element.setPoints(element.getPlacement());
                     player.setOfflinePoints(element.getPoints() + player.getOfflinePoints());
 
                 } else {
-                    element.setPoints(TournamentPointsEnum.valueOf(parseInt(element.getPlacement())).getPoints());
+                    element.setPoints(element.getPlacement());
                     player.setOnlinePoints(element.getPoints() + player.getOnlinePoints());
                 }
             }

@@ -6,13 +6,13 @@ import com.opencsv.bean.CsvBindByName;
 public class CSVTournamentDTO {
 
     @CsvBindByName(column = "Miejsce")
-    private String placement;
+    private int placement;
     @CsvBindByName(column = "Zawodnik")
     private String player;
     @CsvBindByName(column = "Punkty")
     private int points;
 
-    public CSVTournamentDTO(String placement, String player, int points) {
+    public CSVTournamentDTO(int placement, String player, int points) {
         this.placement = placement;
         this.player = player;
         this.points = points;
@@ -21,11 +21,11 @@ public class CSVTournamentDTO {
     public CSVTournamentDTO() {
     }
 
-    public String getPlacement() {
+    public int getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(int placement) {
         this.placement = placement;
     }
 

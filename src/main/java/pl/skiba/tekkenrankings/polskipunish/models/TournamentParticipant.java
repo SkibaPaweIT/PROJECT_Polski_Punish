@@ -1,6 +1,7 @@
 package pl.skiba.tekkenrankings.polskipunish.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentPointsEnum;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public class TournamentParticipant {
     @JoinColumn(name = "player_id")
     private Player player;
 
-    private String placement;
+    private int placement;
     private int points;
 
     @JsonIgnore
@@ -27,12 +28,15 @@ public class TournamentParticipant {
     public TournamentParticipant() {
     }
 
-    public TournamentParticipant(Player player,String placement, int points, Tournament tournament) {
+    public TournamentParticipant(Player player,int placement, Tournament tournament) {
         this.placement = placement;
-        this.points = points;
         this.player = player;
         this.tournament = tournament;
+
+        this.setPoints(placement);
     }
+
+
 
     public Tournament getTournament() {
         return tournament;
@@ -42,11 +46,11 @@ public class TournamentParticipant {
         this.tournament = tournament;
     }
 
-    public String getPlacement() {
+    public int getPlacement() {
         return placement;
     }
 
-    public void setPlacement(String placement) {
+    public void setPlacement(int placement) {
         this.placement = placement;
     }
 
@@ -62,8 +66,8 @@ public class TournamentParticipant {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setPoints(int placement) {
+        this.points = TournamentPointsEnum.valueOf(placement).getPoints();
     }
 
     public Player getPlayer() {

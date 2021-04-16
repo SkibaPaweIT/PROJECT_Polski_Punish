@@ -40,7 +40,7 @@ public class ChallongeParticipant {
         return placement;
     }
 
-    public String getPlacementToString() {
+    public String placementToString() {
         return String.valueOf(placement);
     }
 

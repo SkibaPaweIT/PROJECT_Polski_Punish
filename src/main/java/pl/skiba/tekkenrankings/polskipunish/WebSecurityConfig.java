@@ -30,9 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/api/admin/*").hasRole("ADMIN")
-                                .and()
-                                .formLogin();
+//        http.authorizeRequests().antMatchers("/api/admin/*").hasRole("ADMIN")
+//                                .and()
+//                                .formLogin();
     }
 
     @Bean //jak ma bean to można wstrzykiwać jego instancje

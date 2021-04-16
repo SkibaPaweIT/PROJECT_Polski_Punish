@@ -25,7 +25,7 @@ public class MyModelMapper {
             TournamentParticipant tournamentParticipant = new TournamentParticipant();
             tournamentParticipant.setPlayer(new Player(context.getSource().getPlayer()));
             tournamentParticipant.setPlacement(context.getSource().getPlacement());
-            tournamentParticipant.setPoints(context.getSource().getPoints());
+            //tournamentParticipant.setPoints(context.getSource().getPoints());
             return tournamentParticipant;
         }
     };
@@ -35,7 +35,7 @@ public class MyModelMapper {
         public TournamentParticipant convert(MappingContext<ChallongeParticipant, TournamentParticipant> mappingContext) {
             TournamentParticipant tournamentParticipant = new TournamentParticipant();
             tournamentParticipant.setPlayer(new Player(mappingContext.getSource().getName()));
-            tournamentParticipant.setPlacement(mappingContext.getSource().getPlacementToString());
+            tournamentParticipant.setPlacement(mappingContext.getSource().getPlacement());
             return tournamentParticipant;
         }
     };
@@ -44,7 +44,7 @@ public class MyModelMapper {
         @Override
         public TournamentParticipant convert(MappingContext<SmashNodes, TournamentParticipant> mappingContext) {
             TournamentParticipant tournamentParticipant = new TournamentParticipant();
-            tournamentParticipant.setPlacement(mappingContext.getSource().getPlacementToString());
+            tournamentParticipant.setPlacement(mappingContext.getSource().getPlacement());
             tournamentParticipant.setPlayer(new Player(mappingContext.getSource().getEntrant().getName()));
             return tournamentParticipant;
         }
