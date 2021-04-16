@@ -19,5 +19,12 @@ Recent Utilities:
   next targets:  
   -Learning new tools like mapper, docker.  
   -Handle exceptions,erros. Some data serialization.  
-  -Further code improvements.  
+  -Further code improvements. 
+  
+  Current targets:
+  -Changing some model mappers to map structs (Peaople say it's way faster)
+  -Adding new exceptions (Checking out the best practices)
+  -Changing models. Refreshing code. 
+  
+  
   
