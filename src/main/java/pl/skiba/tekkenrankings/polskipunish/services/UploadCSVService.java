@@ -63,6 +63,7 @@ public class UploadCSVService {
 
             if(tournamentType == TournamentCategoryEnum.Offline){
                 tournamentPlayer.getPlayer().setOfflinePoints(tournamentPlayer.getPoints()+pointsContainer);
+
             }
             else {
                 tournamentPlayer.getPlayer().setOnlinePoints(tournamentPlayer.getPoints()+pointsContainer);

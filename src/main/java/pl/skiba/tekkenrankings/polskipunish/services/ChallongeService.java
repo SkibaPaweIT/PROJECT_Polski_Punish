@@ -75,11 +75,11 @@ public class ChallongeService {
             if(element.getPlacement() <=9)
             {
                 if (tournamentType == TournamentCategoryEnum.Offline) {
-                    element.setPoints(element.getPlacement());
+                    element.pointsFromPlacement(element.getPlacement());
                     player.setOfflinePoints(element.getPoints() + player.getOfflinePoints());
 
                 } else {
-                    element.setPoints(element.getPlacement());
+                    element.pointsFromPlacement(element.getPlacement());
                     player.setOnlinePoints(element.getPoints() + player.getOnlinePoints());
                 }
             }

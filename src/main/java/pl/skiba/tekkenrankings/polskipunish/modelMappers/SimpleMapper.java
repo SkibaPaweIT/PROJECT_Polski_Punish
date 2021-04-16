@@ -3,6 +3,7 @@ package pl.skiba.tekkenrankings.polskipunish.modelMappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
 import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 
@@ -27,5 +28,11 @@ public interface SimpleMapper {
     Iterable<TournamentParticipant> toTournamentParticipants(Iterable<ChallongeParticipant> tournamentParticipants);
     List<TournamentParticipant> toTournamentParticipantsList(List<ChallongeParticipant> tournamentParticipants);
 
+    //CSV
+    @Mapping(source="player" , target="player.name")
+    @Mapping(source="placement" , target="placement")
+    @Mapping(source="points" , target="points")
+    TournamentParticipant toTournamentParticipant(CSVTournamentDTO csvTournamentDTO);
+    List<TournamentParticipant> toTournamentParticipantsListFromCSV(List<CSVTournamentDTO> tournamentParticipants);
 
 }

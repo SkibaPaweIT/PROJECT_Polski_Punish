@@ -21,6 +21,12 @@ public class Player {
     public Player() {
     }
 
+    public Player(String name, int onlinePoints, int offlinePoints) {
+        this.name = name;
+        this.onlinePoints = onlinePoints;
+        this.offlinePoints = offlinePoints;
+    }
+
     public Player(String name) {
         this.name = name;
     }

@@ -28,12 +28,12 @@ public class TournamentParticipant {
     public TournamentParticipant() {
     }
 
-    public TournamentParticipant(Player player,int placement, Tournament tournament) {
+    public TournamentParticipant(Player player,int placement, Tournament tournament , int points) {
         this.placement = placement;
         this.player = player;
         this.tournament = tournament;
-
-        this.setPoints(placement);
+        this.points = points;
+        this.pointsFromPlacement(placement);
     }
 
 
@@ -66,8 +66,12 @@ public class TournamentParticipant {
         return points;
     }
 
-    public void setPoints(int placement) {
-        this.points = TournamentPointsEnum.valueOf(placement).getPoints();
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void pointsFromPlacement(int placement) {
+            this.points = TournamentPointsEnum.valueOf(placement).getPoints();
     }
 
     public Player getPlayer() {
