@@ -3,7 +3,9 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Game;
+import pl.skiba.tekkenrankings.polskipunish.models.GameDTO;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.repo.GameRepo;
 
@@ -23,8 +25,8 @@ public class GameService {
         return gameRepo.findByGameName(gameName).orElse(null);
     }
 
-    public List<Game> getAll(){
-        return gameRepo.findAll();
+    public List<GameDTO> getAll(){
+        return SimpleMapper.INSTANCE.GameListToDTO(gameRepo.findAll());
     }
 
     @EventListener(ApplicationReadyEvent.class)

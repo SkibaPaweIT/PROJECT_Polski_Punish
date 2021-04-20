@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.skiba.tekkenrankings.polskipunish.exceptions.PlayerNotFoundException;
+import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
+import pl.skiba.tekkenrankings.polskipunish.models.PlayerDTO;
 import pl.skiba.tekkenrankings.polskipunish.services.PlayerService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,14 +35,14 @@ public class PlayerController {
     }
 
     @GetMapping("/all")
-    public Iterable<Player> getAll() {
+    public Iterable<PlayerDTO> getAll() {
         return playerService.findAll();
     }
 
 
 
     @GetMapping(value="/{id}")
-    public Player findById(@PathVariable("id") Long id , HttpServletResponse response){
-        return playerService.getById(id).orElseThrow(()->new PlayerNotFoundException(id) );
+    public PlayerDTO findById(@PathVariable("id") Long id , HttpServletResponse response){
+        return SimpleMapper.INSTANCE.PlayerToDTO(playerService.getById(id).orElseThrow(()->new PlayerNotFoundException(id)));
     }
 }

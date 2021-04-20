@@ -2,9 +2,11 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Player;
+import pl.skiba.tekkenrankings.polskipunish.models.PlayerDTO;
 import pl.skiba.tekkenrankings.polskipunish.repo.PlayerRepo;
 
 import java.util.Optional;
@@ -38,8 +40,8 @@ public class PlayerService {
         return playerRepo.findAllProjectedBy(Sort.by(Sort.Direction.DESC,"offlinePoints"));
     }
 
-    public Iterable<Player> findAll(){
-        return playerRepo.findAll();
+    public Iterable<PlayerDTO> findAll(){
+        return SimpleMapper.INSTANCE.PlayerListToListDTO(playerRepo.findAll());
     }
 
     public Iterable<OnlineRanking> getOnlineRanking(){

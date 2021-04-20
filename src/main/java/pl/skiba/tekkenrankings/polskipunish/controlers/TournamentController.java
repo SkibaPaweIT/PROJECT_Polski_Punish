@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.skiba.tekkenrankings.polskipunish.exceptions.TournamentNotFoundException;
+import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.TournamentDTO;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +30,8 @@ public class TournamentController {
 
 
     @GetMapping("/all")
-    public Iterable<Tournament> getAll(){
-        return tournamentService.findAll();
+    public Iterable<TournamentDTO> getAll(){
+        return SimpleMapper.INSTANCE.TournamentListToDto(tournamentService.findAll());
     }
 
     @GetMapping("/all/name")

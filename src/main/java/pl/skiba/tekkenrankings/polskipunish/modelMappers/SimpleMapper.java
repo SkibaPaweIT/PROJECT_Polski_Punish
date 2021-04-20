@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
-import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.*;
 import pl.skiba.tekkenrankings.polskipunish.models.SmashModels.SmashNodes;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 
 import java.util.List;
 
@@ -47,6 +45,23 @@ public interface SimpleMapper {
     TournamentParticipant toTournamentParticipant(CSVTournamentDTO csvTournamentDTO);
     List<TournamentParticipant> toTournamentParticipantsListFromCSV(List<CSVTournamentDTO> tournamentParticipants);
 
+    //Basic DTO conversions
+
+    PlayerDTO PlayerToDTO(Player player);
+    Iterable<PlayerDTO> PlayerListToListDTO(List<Player> playerList);
+
+    GameDTO GameToDTO(Game game);
+    List<GameDTO> GameListToDTO(List<Game> gameList);
+
+
+    @Mapping(source="participants" , target="participants")
+    @Mapping(source="game" , target="game")
+    TournamentDTO TournamentToDto(Tournament tournament);
+    Iterable<TournamentDTO> TournamentListToDto(Iterable<Tournament> tournamentList);
+
+    @Mapping(source="player" , target="player")
+    TournamentParticipantDTO TournamentParticipantToDto(TournamentParticipant tournamentParticipant);
+    List<TournamentParticipantDTO> TournamentParticipantListToDto(List<TournamentParticipant> tournamentParticipantList);
 
 
 }
