@@ -1,13 +1,11 @@
 package pl.skiba.tekkenrankings.polskipunish.controlers;
 
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
@@ -39,7 +37,6 @@ public class UploadCSVController {
                                 @RequestParam("tournamentType") TournamentCategoryEnum tournamentType){
 
 
-            MyModelMapper myModelMapper = new MyModelMapper();
             List<CSVTournamentDTO> tournamentPlayers = uploadCSVService.UploadPlayersToCSV(file);
             //List<TournamentParticipant> participants = myModelMapper.modelMapper.map(tournamentPlayers , new TypeToken<List<TournamentParticipant>>() {}.getType());
             List<TournamentParticipant> participants = SimpleMapper.INSTANCE.toTournamentParticipantsListFromCSV(tournamentPlayers);

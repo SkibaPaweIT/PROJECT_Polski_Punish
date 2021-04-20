@@ -1,6 +1,8 @@
 package pl.skiba.tekkenrankings.polskipunish.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,7 +15,9 @@ import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -30,21 +34,20 @@ public class ChallongeService {
         this.gameService = gameService;
     }
 
-    public List<ChallongeParticipant> makeChallongeParticipantsList(String url, String tournamentname) throws IOException {
+    public List<ChallongeParticipant> makeChallongeParticipantsList(String url) throws IOException {
 
         List<ChallongeParticipant> participantList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        JSONArray response = JsonReader.readJsonFromUrl(url , tournamentname);
+        JsonNode node2 = objectMapper.readTree(new URL(url));
 
-        response.forEach(element -> {
-            JSONObject obj = (JSONObject) element;
-            String participantJSON = ((JSONObject) element).getJSONObject("participant").toString();
+        node2.forEach(element -> {
+            String participant = element.at("/participant").toString();
+
             try {
-                participantList.add(objectMapper.readValue(participantJSON, ChallongeParticipant.class));
+                participantList.add(objectMapper.readValue(participant, ChallongeParticipant.class));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-
         });
 
         participantList.sort(new Comparator<ChallongeParticipant>() {

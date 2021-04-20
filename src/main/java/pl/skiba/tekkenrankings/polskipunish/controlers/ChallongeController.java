@@ -1,13 +1,11 @@
 package pl.skiba.tekkenrankings.polskipunish.controlers;
 
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
@@ -37,7 +35,7 @@ public class ChallongeController {
     private String challonge_api_key;
 
     @GetMapping("/challonge")
-    public String challongeUpload(Model model){
+    public String challongeUpload(){
         return "challonge-upload";
     }
 
@@ -45,9 +43,8 @@ public class ChallongeController {
     public String getTournamentFromChallonge(@RequestParam String tournamentName,
                                                                  @RequestParam TournamentCategoryEnum tournamentType ,
                                                                  @RequestParam String gamename) throws IOException {
-        MyModelMapper myModelMapper = new MyModelMapper();
         String url= "https://api.challonge.com/v1/tournaments/" + tournamentName + "/participants.json?api_key=" + challonge_api_key;
-        List<ChallongeParticipant> participantList = challongeService.makeChallongeParticipantsList(url, tournamentName);
+        List<ChallongeParticipant> participantList = challongeService.makeChallongeParticipantsList(url);
         List<TournamentParticipant> participants = SimpleMapper.INSTANCE.toTournamentParticipantsList(participantList);
         Tournament tournament= challongeService.getTourmanetFromParticipantList(participants , tournamentType, tournamentName , gamename);
         tournamentService.save(tournament);

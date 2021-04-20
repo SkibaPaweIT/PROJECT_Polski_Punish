@@ -13,12 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.skiba.tekkenrankings.polskipunish.exceptions.TournamentNotFoundException;
-import pl.skiba.tekkenrankings.polskipunish.modelMappers.MyModelMapper;
+import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.SmashModels.SmashNodes;
 import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +41,6 @@ public class SmashService {
 
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final MyModelMapper myModelMapper = new MyModelMapper();
 
 
 
@@ -80,7 +78,7 @@ public class SmashService {
 
         JsonNode nodesRoot = root.at("/data/tournament/events/0/standings/nodes");
         List<SmashNodes> smashNodesList= Arrays.asList(objectMapper.readValue(nodesRoot.toString(), SmashNodes[].class));
-        List<TournamentParticipant> tournamentParticipantList = myModelMapper.modelMapper.map(smashNodesList , new TypeToken<List<TournamentParticipant>>() {}.getType());
+        List<TournamentParticipant> tournamentParticipantList = SimpleMapper.INSTANCE.toTournamentParticipantListsFromCSmashNodesList(smashNodesList);
 
         return challongeService.getTourmanetFromParticipantList(tournamentParticipantList, tournamentType,tournamentName, gamename);
     }
