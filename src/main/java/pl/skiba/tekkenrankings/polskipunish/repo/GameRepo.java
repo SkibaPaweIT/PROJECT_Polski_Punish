@@ -1,10 +1,8 @@
 package pl.skiba.tekkenrankings.polskipunish.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import pl.skiba.tekkenrankings.polskipunish.models.Game;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Game;
 
 import java.util.Optional;
 

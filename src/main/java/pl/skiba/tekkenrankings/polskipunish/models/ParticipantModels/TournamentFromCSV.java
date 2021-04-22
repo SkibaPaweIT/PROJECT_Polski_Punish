@@ -1,9 +1,9 @@
-package pl.skiba.tekkenrankings.polskipunish.models;
+package pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels;
 
 import com.opencsv.bean.CsvBindByName;
 
 
-public class CSVTournamentDTO {
+public class TournamentFromCSV {
 
     @CsvBindByName(column = "Miejsce")
     private int placement;
@@ -12,13 +12,13 @@ public class CSVTournamentDTO {
     @CsvBindByName(column = "Punkty")
     private int points;
 
-    public CSVTournamentDTO(int placement, String player, int points) {
+    public TournamentFromCSV(int placement, String player, int points) {
         this.placement = placement;
         this.player = player;
         this.points = points;
     }
 
-    public CSVTournamentDTO() {
+    public TournamentFromCSV() {
     }
 
     public int getPlacement() {

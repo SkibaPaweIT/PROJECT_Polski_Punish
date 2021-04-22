@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.services.SmashService;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 
@@ -27,7 +28,7 @@ public class SmashController {
     }
 
     @GetMapping("/smash")
-    public String SmashUpload(Model model){
+    public String SmashUpload(){
         return "smash-upload";
     }
 

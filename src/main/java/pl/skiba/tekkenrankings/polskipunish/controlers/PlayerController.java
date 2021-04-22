@@ -8,8 +8,7 @@ import pl.skiba.tekkenrankings.polskipunish.exceptions.PlayerNotFoundException;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
-import pl.skiba.tekkenrankings.polskipunish.models.Player;
-import pl.skiba.tekkenrankings.polskipunish.models.PlayerDTO;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.PlayerDTO;
 import pl.skiba.tekkenrankings.polskipunish.services.PlayerService;
 
 import javax.servlet.http.HttpServletResponse;

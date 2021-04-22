@@ -2,7 +2,7 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.skiba.tekkenrankings.polskipunish.models.AppUser;
+import pl.skiba.tekkenrankings.polskipunish.models.WebsiteModels.AppUser;
 import pl.skiba.tekkenrankings.polskipunish.repo.AppUserRepo;
 
 @Configuration

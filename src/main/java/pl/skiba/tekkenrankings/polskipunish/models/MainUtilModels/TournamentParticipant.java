@@ -1,4 +1,4 @@
-package pl.skiba.tekkenrankings.polskipunish.models;
+package pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentPointsEnum;

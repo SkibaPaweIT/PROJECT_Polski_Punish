@@ -2,15 +2,15 @@ package pl.skiba.tekkenrankings.polskipunish.controlers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
-import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.services.ChallongeService;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 

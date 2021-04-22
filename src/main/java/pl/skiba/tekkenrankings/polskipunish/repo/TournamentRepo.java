@@ -4,9 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import pl.skiba.tekkenrankings.polskipunish.models.Game;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
 
 
 

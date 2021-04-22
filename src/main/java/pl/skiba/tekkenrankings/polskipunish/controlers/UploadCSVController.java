@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
-import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.TournamentFromCSV;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.services.UploadCSVService;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class UploadCSVController {
                                 @RequestParam("tournamentType") TournamentCategoryEnum tournamentType){
 
 
-            List<CSVTournamentDTO> tournamentPlayers = uploadCSVService.UploadPlayersToCSV(file);
+            List<TournamentFromCSV> tournamentPlayers = uploadCSVService.UploadPlayersToCSV(file);
             //List<TournamentParticipant> participants = myModelMapper.modelMapper.map(tournamentPlayers , new TypeToken<List<TournamentParticipant>>() {}.getType());
             List<TournamentParticipant> participants = SimpleMapper.INSTANCE.toTournamentParticipantsListFromCSV(tournamentPlayers);
             Tournament tournament = uploadCSVService.CreateTournamentFromCSV(name,gamename,tournamentType,participants);

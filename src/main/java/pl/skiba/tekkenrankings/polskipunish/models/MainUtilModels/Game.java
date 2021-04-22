@@ -1,4 +1,4 @@
-package pl.skiba.tekkenrankings.polskipunish.models;
+package pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels;
 
 import javax.persistence.*;
 import java.util.List;

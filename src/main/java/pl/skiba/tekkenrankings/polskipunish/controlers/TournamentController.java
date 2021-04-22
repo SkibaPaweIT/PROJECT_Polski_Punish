@@ -1,17 +1,15 @@
 package pl.skiba.tekkenrankings.polskipunish.controlers;
 
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import pl.skiba.tekkenrankings.polskipunish.exceptions.TournamentNotFoundException;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentDTO;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentDTO;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/tournament")
@@ -25,13 +23,18 @@ public class TournamentController {
 
     @GetMapping(value="/{id}")
     public Tournament findById(@PathVariable("id") Long id , HttpServletResponse response){
-            return tournamentService.findById(id).orElseThrow(()->new TournamentNotFoundException(id) );
+            return tournamentService.findById(id).orElseThrow(()->new EntityNotFoundException("Tournament "+id+" not Found") );
     }
 
 
     @GetMapping("/all")
     public Iterable<TournamentDTO> getAll(){
-        return SimpleMapper.INSTANCE.TournamentListToDto(tournamentService.findAll());
+
+        Iterable<TournamentDTO> result = SimpleMapper.INSTANCE.TournamentListToDto(tournamentService.findAll());
+        if(((Collection<TournamentDTO>) result).size()== 0){
+            throw new EntityNotFoundException("Tournaments not found");
+        }
+        else return result;
     }
 
     @GetMapping("/all/name")

@@ -4,10 +4,10 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.skiba.tekkenrankings.polskipunish.models.CSVTournamentDTO;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.TournamentFromCSV;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,12 +29,12 @@ public class UploadCSVService {
         this.playerService = playerService;
     }
 
-    public List<CSVTournamentDTO> UploadPlayersToCSV(MultipartFile file) {
-        List<CSVTournamentDTO> list = new ArrayList<>();
+    public List<TournamentFromCSV> UploadPlayersToCSV(MultipartFile file) {
+        List<TournamentFromCSV> list = new ArrayList<>();
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
-            CsvToBean<CSVTournamentDTO> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVTournamentDTO.class)
+            CsvToBean<TournamentFromCSV> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(TournamentFromCSV.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .withSeparator(';')
                     .build();

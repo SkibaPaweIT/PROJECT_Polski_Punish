@@ -1,56 +1,53 @@
 package pl.skiba.tekkenrankings.polskipunish.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import pl.skiba.tekkenrankings.polskipunish.models.ChallongeParticipant;
-import pl.skiba.tekkenrankings.polskipunish.models.Player;
-import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentPointsEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
-import pl.skiba.tekkenrankings.polskipunish.models.Tournament;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Player;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
 
-import java.io.IOException;
+import javax.persistence.EntityNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import static java.lang.Integer.parseInt;
 
 @Service
 public class ChallongeService {
 
-    private PlayerService playerService;
-    private GameService gameService;
+    private final PlayerService playerService;
+    private final GameService gameService;
 
     public ChallongeService(PlayerService playerService, GameService gameService) {
         this.playerService = playerService;
         this.gameService = gameService;
     }
 
-    public List<ChallongeParticipant> makeChallongeParticipantsList(String url) throws IOException {
+    public List<ChallongeParticipant> makeChallongeParticipantsList(String url){
 
         List<ChallongeParticipant> participantList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode node2 = objectMapper.readTree(new URL(url));
+        try {
+            JsonNode node2 = objectMapper.readTree(new URL(url));
+            node2.forEach(element -> {
+                String participant = element.at("/participant").toString();
+                try {
+                    participantList.add(objectMapper.readValue(participant, ChallongeParticipant.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        catch(Exception e){
+            throw new EntityNotFoundException("Nie znaleziono turnieju o tej nazwie na Challonge");
+        }
 
-        node2.forEach(element -> {
-            String participant = element.at("/participant").toString();
 
-            try {
-                participantList.add(objectMapper.readValue(participant, ChallongeParticipant.class));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        });
-
-        participantList.sort(new Comparator<ChallongeParticipant>() {
+        participantList.sort(new Comparator<>() {
             @Override
             public int compare(ChallongeParticipant o1, ChallongeParticipant o2) {
                 if (o1.getPlacement() == 0) {

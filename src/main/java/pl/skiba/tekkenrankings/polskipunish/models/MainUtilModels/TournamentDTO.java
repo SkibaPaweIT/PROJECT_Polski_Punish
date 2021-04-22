@@ -1,15 +1,13 @@
-package pl.skiba.tekkenrankings.polskipunish.models;
+package pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels;
 
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
-
-import java.util.List;
 
 public class TournamentDTO {
 
     private String tournamentName;
     private TournamentCategoryEnum tournamentCategory;
     private GameDTO game;
-    private List<TournamentParticipantDTO> participants;
+    private Iterable<TournamentParticipantDTO> participants;
 
     public String getTournamentName() {
         return tournamentName;
@@ -35,11 +33,11 @@ public class TournamentDTO {
         this.game = game;
     }
 
-    public List<TournamentParticipantDTO> getParticipants() {
+    public Iterable<TournamentParticipantDTO> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<TournamentParticipantDTO> participants) {
+    public void setParticipants(Iterable<TournamentParticipantDTO> participants) {
         this.participants = participants;
     }
 }

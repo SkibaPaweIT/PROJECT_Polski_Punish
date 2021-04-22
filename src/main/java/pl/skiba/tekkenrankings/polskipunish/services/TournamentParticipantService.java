@@ -2,7 +2,7 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.skiba.tekkenrankings.polskipunish.models.TournamentParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.repo.TournamentParticipantRepo;
 
 import java.util.Optional;

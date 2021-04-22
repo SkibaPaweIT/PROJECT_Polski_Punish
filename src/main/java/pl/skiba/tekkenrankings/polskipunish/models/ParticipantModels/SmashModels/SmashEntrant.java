@@ -1,4 +1,4 @@
-package pl.skiba.tekkenrankings.polskipunish.models.SmashModels;
+package pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.SmashModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,11 +1,12 @@
 package pl.skiba.tekkenrankings.polskipunish.modelMappers;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import pl.skiba.tekkenrankings.polskipunish.models.*;
-import pl.skiba.tekkenrankings.polskipunish.models.SmashModels.SmashNodes;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.*;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.TournamentFromCSV;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.SmashModels.SmashNodes;
 
 import java.util.List;
 
@@ -25,9 +26,6 @@ public interface SimpleMapper {
     @Mapping(source="player.name" , target="name")
 
     ChallongeParticipant toChallongeParticipant(TournamentParticipant tournamentParticipant);
-
-    Iterable<ChallongeParticipant> toChallongeParticipants(Iterable<TournamentParticipant> tournamentParticipants);
-    Iterable<TournamentParticipant> toTournamentParticipants(Iterable<ChallongeParticipant> tournamentParticipants);
     List<TournamentParticipant> toTournamentParticipantsList(List<ChallongeParticipant> tournamentParticipants);
 
     //Smash here
@@ -42,17 +40,17 @@ public interface SimpleMapper {
     @Mapping(source="player" , target="player.name")
     @Mapping(source="placement" , target="placement")
     @Mapping(source="points" , target="points")
-    TournamentParticipant toTournamentParticipant(CSVTournamentDTO csvTournamentDTO);
-    List<TournamentParticipant> toTournamentParticipantsListFromCSV(List<CSVTournamentDTO> tournamentParticipants);
+    TournamentParticipant toTournamentParticipant(TournamentFromCSV csvTournamentDTO);
+    List<TournamentParticipant> toTournamentParticipantsListFromCSV(List<TournamentFromCSV> tournamentParticipants);
+
+
 
     //Basic DTO conversions
-
     PlayerDTO PlayerToDTO(Player player);
-    Iterable<PlayerDTO> PlayerListToListDTO(List<Player> playerList);
+    Iterable<PlayerDTO> PlayerListToListDTO(Iterable<Player> playerList);
 
     GameDTO GameToDTO(Game game);
-    List<GameDTO> GameListToDTO(List<Game> gameList);
-
+    Iterable<GameDTO> GameListToDTO(Iterable<Game> gameList);
 
     @Mapping(source="participants" , target="participants")
     @Mapping(source="game" , target="game")
@@ -61,7 +59,7 @@ public interface SimpleMapper {
 
     @Mapping(source="player" , target="player")
     TournamentParticipantDTO TournamentParticipantToDto(TournamentParticipant tournamentParticipant);
-    List<TournamentParticipantDTO> TournamentParticipantListToDto(List<TournamentParticipant> tournamentParticipantList);
+    Iterable<TournamentParticipantDTO> TournamentParticipantListToDto(Iterable<TournamentParticipant> tournamentParticipantList);
 
 
 }
