@@ -6,6 +6,15 @@ public class PlayerDTO {
     private int onlinePoints=0;
     private int offlinePoints=0;
 
+    public PlayerDTO(String name, int onlinePoints, int offlinePoints) {
+        this.name = name;
+        this.onlinePoints = onlinePoints;
+        this.offlinePoints = offlinePoints;
+    }
+
+    public PlayerDTO() {
+    }
+
     public String getName() {
         return name;
     }
