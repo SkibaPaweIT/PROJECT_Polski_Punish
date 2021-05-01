@@ -5,6 +5,14 @@ public class GameDTO {
     private Long id;
     private String gameName;
 
+    public GameDTO(Long id, String gameName) {
+        this.id = id;
+        this.gameName = gameName;
+    }
+
+    public GameDTO() {
+    }
+
     public Long getId() {
         return id;
     }
