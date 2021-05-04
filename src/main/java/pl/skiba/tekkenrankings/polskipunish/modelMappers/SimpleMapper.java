@@ -7,6 +7,8 @@ import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.*;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.TournamentFromCSV;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.SmashModels.SmashNodes;
+import pl.skiba.tekkenrankings.polskipunish.models.WebsiteModels.PostModel;
+import pl.skiba.tekkenrankings.polskipunish.models.WebsiteModels.PostModelDTO;
 
 import java.util.List;
 
@@ -61,5 +63,6 @@ public interface SimpleMapper {
     TournamentParticipantDTO TournamentParticipantToDto(TournamentParticipant tournamentParticipant);
     Iterable<TournamentParticipantDTO> TournamentParticipantListToDto(Iterable<TournamentParticipant> tournamentParticipantList);
 
-
+    PostModelDTO PostModelToDto(PostModel postModel);
+    Iterable<PostModelDTO> PostModelListToDto(Iterable<PostModel> postModelIterable);
 }
