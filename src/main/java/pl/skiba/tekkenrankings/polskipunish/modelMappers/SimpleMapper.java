@@ -51,6 +51,7 @@ public interface SimpleMapper {
     PlayerDTO PlayerToDTO(Player player);
     Iterable<PlayerDTO> PlayerListToListDTO(Iterable<Player> playerList);
 
+    @Mapping(source="gameName" , target ="gameName")
     GameDTO GameToDTO(Game game);
     Iterable<GameDTO> GameListToDTO(Iterable<Game> gameList);
 

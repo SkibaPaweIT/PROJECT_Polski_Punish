@@ -3,6 +3,7 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import pl.skiba.tekkenrankings.polskipunish.exceptions.GameNotFoundException;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Game;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.GameDTO;
@@ -22,7 +23,12 @@ public class GameService {
     }
 
     public Game getGameByName(String gameName) {
-        return gameRepo.findByGameName(gameName).orElse(null);
+        return gameRepo.findByGameName(gameName).orElseThrow(() -> new GameNotFoundException(gameName));
+    }
+
+    public GameDTO getGameDTOByName(String gameName) {
+        Game game= gameRepo.findByGameName(gameName).orElseThrow(() -> new GameNotFoundException(gameName));
+        return SimpleMapper.INSTANCE.GameToDTO(game);
     }
 
     public Iterable<GameDTO> getAll(){

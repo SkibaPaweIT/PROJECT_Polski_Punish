@@ -40,6 +40,6 @@ public class PlayerController {
 
     @GetMapping(value="/{id}")
     public PlayerDTO findById(@PathVariable("id") Long id){
-        return SimpleMapper.INSTANCE.PlayerToDTO(playerService.getById(id).orElseThrow(()->new PlayerNotFoundException(id)));
+        return SimpleMapper.INSTANCE.PlayerToDTO(playerService.getById(id));
     }
 }

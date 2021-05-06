@@ -21,9 +21,9 @@ public interface PlayerRepo extends JpaRepository<Player,Long> {
     //@Query("Select p.name, p.offlinePoints from Player p order by p.offlinePoints desc")
 
 
-    Iterable<OfflineRanking> findAllProjectedBy(Sort sort);
+    Iterable<OfflineRanking>findAllProjectedBy(Sort sort);
 
-    Iterable<OnlineRanking> findAllBy(Sort sort);
+    Iterable<OnlineRanking>findAllBy(Sort sort);
 
     //@Query("Select p.name, p.onlinePoints from Player p order by p.onlinePoints desc")
     //List<String> findAllOnline();
