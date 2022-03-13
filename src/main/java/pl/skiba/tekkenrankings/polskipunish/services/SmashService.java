@@ -19,6 +19,7 @@ import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -73,12 +74,12 @@ public class SmashService {
 
     }
 
-    public Tournament getTournament(JsonNode root , String tournamentName, TournamentCategoryEnum tournamentType, String gamename) throws JsonProcessingException {
+    public Tournament getTournament(JsonNode root , String tournamentName, TournamentCategoryEnum tournamentType, String gamename, String country, Date eventDate) throws JsonProcessingException {
 
         JsonNode nodesRoot = root.at("/data/tournament/events/0/standings/nodes");
         List<SmashNodes> smashNodesList= Arrays.asList(objectMapper.readValue(nodesRoot.toString(), SmashNodes[].class));
         List<TournamentParticipant> tournamentParticipantList = SimpleMapper.INSTANCE.toTournamentParticipantListsFromCSmashNodesList(smashNodesList);
 
-        return challongeService.getTourmanetFromParticipantList(tournamentParticipantList, tournamentType,tournamentName, gamename);
+        return challongeService.getTourmanetFromParticipantList(tournamentParticipantList, tournamentType,tournamentName, gamename, country, eventDate);
     }
 }

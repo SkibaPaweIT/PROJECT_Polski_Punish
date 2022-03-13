@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.WebsiteModels.PostModel;
 import pl.skiba.tekkenrankings.polskipunish.models.WebsiteModels.PostModelDTO;
@@ -30,15 +29,15 @@ public class PostControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Test
-    public void testGetAllPosts() throws Exception {
-        MvcResult mvcResult =  mockMvc.perform(MockMvcRequestBuilders.get("/api/posts"))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andReturn();
-
-        PostModel[] postModels= objectMapper.readValue(mvcResult.getResponse().getContentAsString(), PostModel[].class);
-        Assertions.assertEquals("Text here1", postModels[0].getText());
-    }
+//    @Test
+//    public void testGetAllPosts() throws Exception {
+//        MvcResult mvcResult =  mockMvc.perform(MockMvcRequestBuilders.get("/api/posts"))
+//                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+//                .andReturn();
+//
+//        PostModel[] postModels= objectMapper.readValue(mvcResult.getResponse().getContentAsString(), PostModel[].class);
+//        Assertions.assertEquals("Text here1", postModels[0].getText());
+//    }
 
 
 

@@ -2,6 +2,7 @@ package pl.skiba.tekkenrankings.polskipunish.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.PlayerTournaments;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.repo.TournamentParticipantRepo;
 
@@ -29,9 +30,8 @@ public class TournamentParticipantService {
         return tournamentParticipantRepo.findTournamentParticipantByPlayer(name);
     }
 
-    public Iterable<String> getPlayerTournamnets (String name){
+    public Iterable<PlayerTournaments> getPlayerTournamnets (String name){
         return tournamentParticipantRepo.findAllPlayerTournamentsByPlayerName(name);
     }
-
 
 }

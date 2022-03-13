@@ -34,6 +34,12 @@ public class PlayerService {
         return playerRepo.getById(id).orElseThrow(()->new PlayerNotFoundException(id));
     }
 
+    public void deleteById(Long id){
+        var player = playerRepo.getById(id).orElseThrow(()->new PlayerNotFoundException(id));
+        playerRepo.delete(player);
+    }
+
+
     public Player save(Player player){
         return playerRepo.save(player);
     }

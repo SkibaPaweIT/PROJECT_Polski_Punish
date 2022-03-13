@@ -2,9 +2,14 @@ package pl.skiba.tekkenrankings.polskipunish.controlers;
 
 import org.springframework.web.bind.annotation.*;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
+import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.PlayerTournaments;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentParticipantService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/participants")
@@ -16,9 +21,16 @@ public class TournamentParticipantController {
         this.tournamentParticipantService = tournamentParticipantService;
     }
 
-    @GetMapping
-    public Iterable<String> getPlayerTournaments(@RequestParam String name) {
+    @GetMapping("participantTournaments")
+    public Iterable<PlayerTournaments> getPlayerTournaments(@RequestParam String name) {
         return tournamentParticipantService.getPlayerTournamnets(name);
+    }
+
+    @GetMapping
+    public List<ChallongeParticipant> getAllParticipants(){
+        List<ChallongeParticipant> list = new ArrayList<>();
+        tournamentParticipantService.findALl().forEach(element -> list.add(SimpleMapper.INSTANCE.toChallongeParticipant(element)));
+        return list;
     }
 
     @GetMapping("participant")

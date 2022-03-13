@@ -31,15 +31,13 @@ public class GameService {
         return SimpleMapper.INSTANCE.GameToDTO(game);
     }
 
+    public void deleteByGameId(Long id){
+        Game game= gameRepo.findById(id).orElseThrow(() -> new GameNotFoundException(id));
+        gameRepo.delete(game);
+    }
+
     public Iterable<GameDTO> getAll(){
         return SimpleMapper.INSTANCE.GameListToDTO(gameRepo.findAll());
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() {
-        List<Tournament> list = new ArrayList<>();
-        gameRepo.save(new Game("Tekken 7", list));
-        gameRepo.save(new Game("Soul Calibur 6", list));
-        gameRepo.save(new Game("Street Fighter 5", list));
-    }
 }

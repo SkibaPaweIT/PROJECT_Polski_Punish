@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.ObjectUtils;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Player;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
@@ -12,9 +13,7 @@ import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongePa
 
 import javax.persistence.EntityNotFoundException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ChallongeService {
@@ -27,7 +26,7 @@ public class ChallongeService {
         this.gameService = gameService;
     }
 
-    public List<ChallongeParticipant> makeChallongeParticipantsList(String url){
+    public List<ChallongeParticipant> makeChallongeParticipantsList(String url) {
 
         List<ChallongeParticipant> participantList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -41,8 +40,7 @@ public class ChallongeService {
                     e.printStackTrace();
                 }
             });
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new EntityNotFoundException("Nie znaleziono turnieju o tej nazwie na Challonge");
         }
 
@@ -63,8 +61,8 @@ public class ChallongeService {
         return participantList;
     }
 
-    public Tournament getTourmanetFromParticipantList(List<TournamentParticipant> participantList, TournamentCategoryEnum tournamentType , String tournamentName, String gamename) {
-        Tournament tournament = new Tournament(tournamentName,tournamentType, gameService.getGameByName(gamename), participantList);
+    public Tournament getTourmanetFromParticipantList(List<TournamentParticipant> participantList, TournamentCategoryEnum tournamentType, String tournamentName, String gamename, String country, Date eventDate) {
+        Tournament tournament = new Tournament(tournamentName, tournamentType, gameService.getGameByName(gamename), participantList, country, eventDate);
         participantList.forEach(element -> {
             element.setTournament(tournament);
             Player player = element.getPlayer();
@@ -72,8 +70,11 @@ public class ChallongeService {
                 player = playerService.getByName(element.getPlayer().getName()).orElseThrow(); //Don't need handle exceptions because of if statement
             }
 
-            if(element.getPlacement() <=9)
-            {
+            if(Objects.nonNull(element.getChallongeId())){
+                player.setChallongeId(element.getChallongeId());
+            }
+
+            if (element.getPlacement() <= 9) {
                 if (tournamentType == TournamentCategoryEnum.Offline) {
                     element.pointsFromPlacement(element.getPlacement());
                     player.setOfflinePoints(element.getPoints() + player.getOfflinePoints());

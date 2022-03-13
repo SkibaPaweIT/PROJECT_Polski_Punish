@@ -1,5 +1,7 @@
 package pl.skiba.tekkenrankings.polskipunish.controlers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.TournamentNames;
@@ -45,6 +47,12 @@ public class TournamentController {
     @GetMapping("/game-tournaments")
     public Iterable<String> getAllTourmanetNamesFromGame(@RequestParam String gamename){
         return tournamentService.findAllTournamentsToGame(gamename);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteByTournamentid(@RequestParam Long id){
+        tournamentService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping()

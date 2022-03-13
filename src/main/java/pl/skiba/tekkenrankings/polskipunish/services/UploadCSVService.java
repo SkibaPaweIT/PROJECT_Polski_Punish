@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -49,8 +50,8 @@ public class UploadCSVService {
 
     }
 
-    public Tournament CreateTournamentFromCSV(String name, String gamename , TournamentCategoryEnum tournamentType , List<TournamentParticipant> participants){
-        Tournament tournament = new Tournament(name,tournamentType,gameService.getGameByName(gamename),participants);
+    public Tournament CreateTournamentFromCSV(String name, String gamename , TournamentCategoryEnum tournamentType , List<TournamentParticipant> participants, String country, Date eventDate){
+        Tournament tournament = new Tournament(name,tournamentType,gameService.getGameByName(gamename),participants , country, eventDate);
 
         participants.forEach(tournamentPlayer -> {
             int pointsContainer = 0;
