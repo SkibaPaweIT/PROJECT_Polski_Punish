@@ -6,6 +6,8 @@ import lombok.Setter;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentPointsEnum;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class TournamentParticipant {

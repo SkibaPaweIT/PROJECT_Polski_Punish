@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,10 @@ public class Player {
     int offlinePoints = 0;
     Long challongeId;
     Long smashId;
+
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.ALL} , mappedBy = "player1")
+    private List<PlayerMatch> playerMatches = new ArrayList<>();
 
     public Player() {
     }
@@ -64,6 +69,14 @@ public class Player {
 
     public Long getChallongeId() {
         return challongeId;
+    }
+
+    public List<PlayerMatch> getPlayerMatches() {
+        return playerMatches;
+    }
+
+    public void setPlayerMatches(List<PlayerMatch> playerMatches) {
+        this.playerMatches = playerMatches;
     }
 
     public void setChallongeId(Long challongeId) {

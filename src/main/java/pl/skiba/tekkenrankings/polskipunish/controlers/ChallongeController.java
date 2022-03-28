@@ -14,6 +14,7 @@ import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
+import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongePlayerMatch;
 import pl.skiba.tekkenrankings.polskipunish.services.ChallongeService;
 import pl.skiba.tekkenrankings.polskipunish.services.TournamentService;
 
@@ -54,6 +55,10 @@ public class ChallongeController {
         List<TournamentParticipant> participants = SimpleMapper.INSTANCE.toTournamentParticipantsList(participantList);
         Tournament tournament = challongeService.getTourmanetFromParticipantList(participants, tournamentType, tournamentName, gamename, country, eventDate);
         tournamentService.save(tournament);
+
+        String matchesUrl = "https://api.challonge.com/v1/tournaments/" + tournamentName + "/matches.json?api_key=" + challonge_api_key + "&tournament=" + tournamentName;
+        List<ChallongePlayerMatch> allMatches = challongeService.makeChallongeMatchesList(matchesUrl);
+        challongeService.saveChallongeMatches(allMatches , tournament);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

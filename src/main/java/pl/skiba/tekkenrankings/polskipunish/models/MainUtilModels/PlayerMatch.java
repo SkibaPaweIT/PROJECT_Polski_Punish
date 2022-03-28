@@ -12,30 +12,42 @@ public class PlayerMatch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    private Long player1_id;
-    private Long player2_id;
+
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="player_1_id" , nullable = true)
+    private Player player1;
+
+
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="player_2_id" , nullable = true)
+    private Player player2;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="tournament_id" , nullable = true)
     private Tournament tournament;
-
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="player_id" , nullable = true)
-    private Player player;
     private Long round;
+    private Long winner;
+
+    public Long getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Long winner) {
+        this.winner = winner;
+    }
 
     public PlayerMatch(){
 
     }
 
-    public PlayerMatch(Long id, Long player1_id, Long player2_id, Tournament tournament, Player player, Long round) {
+    public PlayerMatch(Long id, Player player1, Player player2, Tournament tournament, Long round) {
         this.id = id;
-        this.player1_id = player1_id;
-        this.player2_id = player2_id;
+        this.player1 = player1;
+        this.player2 = player2;
         this.tournament = tournament;
-        this.player = player;
         this.round = round;
     }
 
@@ -47,20 +59,20 @@ public class PlayerMatch {
         this.id = id;
     }
 
-    public Long getPlayer1_id() {
-        return player1_id;
+    public Player getPlayer1() {
+        return player1;
     }
 
-    public void setPlayer1_id(Long player1_id) {
-        this.player1_id = player1_id;
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
     }
 
-    public Long getPlayer2_id() {
-        return player2_id;
+    public Player getPlayer2() {
+        return player2;
     }
 
-    public void setPlayer2_id(Long player2_id) {
-        this.player2_id = player2_id;
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
     }
 
     public Tournament getTournament() {
@@ -69,14 +81,6 @@ public class PlayerMatch {
 
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public Long getRound() {

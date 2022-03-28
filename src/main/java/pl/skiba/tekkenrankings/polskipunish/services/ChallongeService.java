@@ -7,27 +7,35 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Player;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.PlayerMatch;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Tournament;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.TournamentParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongeParticipant;
 import pl.skiba.tekkenrankings.polskipunish.models.ParticipantModels.ChallongePlayerMatch;
+import pl.skiba.tekkenrankings.polskipunish.repo.PlayerMatchRepo;
+import pl.skiba.tekkenrankings.polskipunish.repo.PlayerRepo;
 
 import javax.persistence.EntityNotFoundException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ChallongeService {
 
     private final PlayerService playerService;
     private final GameService gameService;
+    private final PlayerRepo playerRepo;
+    private final PlayerMatchRepo playerMatchRepo;
 
     @Value("${challonge_api_key}")
     private String challonge_api_key;
 
-    public ChallongeService(PlayerService playerService, GameService gameService) {
+    public ChallongeService(PlayerService playerService, GameService gameService, PlayerRepo playerRepo, PlayerMatchRepo playerMatchRepo) {
         this.playerService = playerService;
         this.gameService = gameService;
+        this.playerRepo = playerRepo;
+        this.playerMatchRepo = playerMatchRepo;
     }
 
     public List<ChallongePlayerMatch> makeChallongeMatchesList(String url) {
@@ -88,8 +96,7 @@ public class ChallongeService {
     }
 
     public Tournament getTourmanetFromParticipantList(List<TournamentParticipant> participantList, TournamentCategoryEnum tournamentType, String tournamentName, String gamename, String country, Date eventDate) {
-        String url = "https://api.challonge.com/v1/tournaments/" + tournamentName + "/matches.json?api_key=" + challonge_api_key + "&tournament=" + tournamentName;
-        List<ChallongePlayerMatch> allMatches = makeChallongeMatchesList(url);
+
 
         Tournament tournament = new Tournament(tournamentName, tournamentType, gameService.getGameByName(gamename), participantList, country, eventDate);
         participantList.forEach(element -> {
@@ -98,10 +105,8 @@ public class ChallongeService {
             if (playerService.ifExists(element.getPlayer().getName())) {
                 player = playerService.getByName(element.getPlayer().getName()).orElseThrow(); //Don't need handle exceptions because of if statement
             }
-
             if (Objects.nonNull(element.getChallongeId())) {
                 player.setChallongeId(element.getChallongeId());
-
             }
 
             if (element.getPlacement() <= 9) {
@@ -121,4 +126,45 @@ public class ChallongeService {
         tournament.setParticipants(participantList);
         return tournament;
     }
+
+    public void saveChallongeMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament){
+        List<PlayerMatch> result = new ArrayList<>();
+        var players = playerRepo.findAll();
+        players.forEach(player -> {
+            getP1PlayerMatches(allMatches, tournament, player, players, result);
+            getP2PlayerMatches(allMatches, tournament, player, players, result);
+        });
+        playerMatchRepo.saveAll(result);
+    }
+
+    public void getP1PlayerMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament , Player player , List<Player> players, List<PlayerMatch> result){
+        var playerMatches = allMatches.stream().filter(match -> player.getChallongeId().equals(match.getPlayer1_id()));
+        playerMatches.forEach(match -> {
+            PlayerMatch playerMatch = new PlayerMatch();
+            playerMatch.setPlayer1(player);
+            playerMatch.setPlayer2(players.stream().filter(opponent -> opponent.getChallongeId().equals(match.getPlayer2_id())).findFirst().get());
+
+            playerMatch.setTournament(tournament);
+            playerMatch.setRound(match.getRound());
+            playerMatch.setWinner(match.getWinner_id().equals(player.getChallongeId()) ? 1L: 0L);
+
+            result.add(playerMatch);
+        });
+    }
+
+    public void getP2PlayerMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament , Player player , List<Player> players, List<PlayerMatch> result){
+        var playerMatches = allMatches.stream().filter(match -> player.getChallongeId().equals(match.getPlayer2_id()));
+        playerMatches.forEach(match -> {
+            PlayerMatch playerMatch = new PlayerMatch();
+            playerMatch.setPlayer1(player);
+            playerMatch.setPlayer2(players.stream().filter(opponent -> opponent.getChallongeId().equals(match.getPlayer1_id())).findFirst().get());
+
+            playerMatch.setTournament(tournament);
+            playerMatch.setRound(match.getRound());
+            playerMatch.setWinner(match.getWinner_id().equals(player.getChallongeId()) ? 1L: 0L);
+
+            result.add(playerMatch);
+        });
+    }
 }
+

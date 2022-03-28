@@ -3,9 +3,11 @@ package pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 import pl.skiba.tekkenrankings.polskipunish.models.Enums.TournamentCategoryEnum;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,9 +33,12 @@ public class Tournament {
     @JoinColumn(name = "game_id", nullable = true)
     private Game game;
 
+    @OneToMany(cascade = {CascadeType.ALL} , mappedBy = "tournament")
+    private List<PlayerMatch> playerMatches =  new ArrayList<>(); ;
+
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "tournament")
-    private List<TournamentParticipant> participants;
+    private List<TournamentParticipant> participants =  new ArrayList<>(); ;
 
     public Tournament(String tournamentName, TournamentCategoryEnum tournamentCategory, Game game, List<TournamentParticipant> participants, String country, Date eventDate) {
         this.tournamentName = tournamentName;

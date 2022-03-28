@@ -10,8 +10,8 @@ import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.Player;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.PlayerDTO;
 import pl.skiba.tekkenrankings.polskipunish.repo.PlayerRepo;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
+
 
 @Service
 public class PlayerService {
