@@ -11,6 +11,7 @@ public class ChallongeParticipant {
     String name;
     int placement;
     int seed;
+    int round;
     Long id;
 
     public ChallongeParticipant() {

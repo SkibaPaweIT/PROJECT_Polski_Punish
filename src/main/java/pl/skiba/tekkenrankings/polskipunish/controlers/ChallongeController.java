@@ -58,7 +58,7 @@ public class ChallongeController {
 
         String matchesUrl = "https://api.challonge.com/v1/tournaments/" + tournamentName + "/matches.json?api_key=" + challonge_api_key + "&tournament=" + tournamentName;
         List<ChallongePlayerMatch> allMatches = challongeService.makeChallongeMatchesList(matchesUrl);
-        challongeService.saveChallongeMatches(allMatches , tournament);
+        challongeService.saveChallongeMatches(allMatches , tournament, participants);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

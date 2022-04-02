@@ -2,10 +2,14 @@ package pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 public class PlayerMatch {
 
     @Id
@@ -14,32 +18,26 @@ public class PlayerMatch {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="player_1_id" , nullable = true)
+    @ManyToOne(cascade = {CascadeType.ALL} , fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_1_id", nullable = true)
     private Player player1;
 
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="player_2_id" , nullable = true)
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_2_id", nullable = true)
     private Player player2;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="tournament_id" , nullable = true)
+    @JoinColumn(name = "tournament_id", nullable = true)
     private Tournament tournament;
     private Long round;
     private Long winner;
+    private Long seed;
+    private Long placement;
 
-    public Long getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Long winner) {
-        this.winner = winner;
-    }
-
-    public PlayerMatch(){
+    public PlayerMatch() {
 
     }
 
@@ -49,6 +47,22 @@ public class PlayerMatch {
         this.player2 = player2;
         this.tournament = tournament;
         this.round = round;
+    }
+
+    public Long getSeed() {
+        return seed;
+    }
+
+    public void setSeed(Long seed) {
+        this.seed = seed;
+    }
+
+    public Long getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(Long placement) {
+        this.placement = placement;
     }
 
     public Long getId() {
@@ -89,5 +103,13 @@ public class PlayerMatch {
 
     public void setRound(Long round) {
         this.round = round;
+    }
+
+    public Long getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Long winner) {
+        this.winner = winner;
     }
 }

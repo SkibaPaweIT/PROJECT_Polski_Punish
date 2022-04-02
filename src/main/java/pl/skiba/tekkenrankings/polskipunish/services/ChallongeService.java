@@ -127,17 +127,18 @@ public class ChallongeService {
         return tournament;
     }
 
-    public void saveChallongeMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament){
+    public void saveChallongeMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament, List<TournamentParticipant> participants){
         List<PlayerMatch> result = new ArrayList<>();
         var players = playerRepo.findAll();
         players.forEach(player -> {
-            getP1PlayerMatches(allMatches, tournament, player, players, result);
-            getP2PlayerMatches(allMatches, tournament, player, players, result);
+            var playerParticipant  = participants.stream().filter(participant -> player.getChallongeId().equals(participant.getChallongeId())).findFirst().orElse(null);
+            getP1PlayerMatches(allMatches, tournament, player, players, result, playerParticipant);
+            getP2PlayerMatches(allMatches, tournament, player, players, result , playerParticipant);
         });
         playerMatchRepo.saveAll(result);
     }
 
-    public void getP1PlayerMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament , Player player , List<Player> players, List<PlayerMatch> result){
+    public void getP1PlayerMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament , Player player , List<Player> players, List<PlayerMatch> result , TournamentParticipant participants){
         var playerMatches = allMatches.stream().filter(match -> player.getChallongeId().equals(match.getPlayer1_id()));
         playerMatches.forEach(match -> {
             PlayerMatch playerMatch = new PlayerMatch();
@@ -148,11 +149,14 @@ public class ChallongeService {
             playerMatch.setRound(match.getRound());
             playerMatch.setWinner(match.getWinner_id().equals(player.getChallongeId()) ? 1L: 0L);
 
+            playerMatch.setPlacement((long) participants.getPlacement());
+            playerMatch.setSeed((long) participants.getSeed());
+
             result.add(playerMatch);
         });
     }
 
-    public void getP2PlayerMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament , Player player , List<Player> players, List<PlayerMatch> result){
+    public void getP2PlayerMatches(List<ChallongePlayerMatch> allMatches, Tournament tournament , Player player , List<Player> players, List<PlayerMatch> result , TournamentParticipant participants){
         var playerMatches = allMatches.stream().filter(match -> player.getChallongeId().equals(match.getPlayer2_id()));
         playerMatches.forEach(match -> {
             PlayerMatch playerMatch = new PlayerMatch();
@@ -162,6 +166,9 @@ public class ChallongeService {
             playerMatch.setTournament(tournament);
             playerMatch.setRound(match.getRound());
             playerMatch.setWinner(match.getWinner_id().equals(player.getChallongeId()) ? 1L: 0L);
+
+            playerMatch.setPlacement((long) participants.getPlacement());
+            playerMatch.setSeed((long) participants.getSeed());
 
             result.add(playerMatch);
         });

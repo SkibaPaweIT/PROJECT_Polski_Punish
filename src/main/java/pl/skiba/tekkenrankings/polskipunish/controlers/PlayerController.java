@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.skiba.tekkenrankings.polskipunish.modelMappers.SimpleMapper;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OfflineRanking;
 import pl.skiba.tekkenrankings.polskipunish.models.Interfaces.OnlineRanking;
+import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.DataAnalysisDTO;
 import pl.skiba.tekkenrankings.polskipunish.models.MainUtilModels.PlayerDTO;
 import pl.skiba.tekkenrankings.polskipunish.services.PlayerService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/players")
@@ -46,5 +49,10 @@ public class PlayerController {
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id){
         playerService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/prepare-dataframe")
+    public List<DataAnalysisDTO> prepareData(){
+        return playerService.prepareData();
     }
 }
