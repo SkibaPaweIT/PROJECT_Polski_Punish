@@ -28,9 +28,6 @@ public class ChallongeService {
     private final PlayerRepo playerRepo;
     private final PlayerMatchRepo playerMatchRepo;
 
-    @Value("${challonge_api_key}")
-    private String challonge_api_key;
-
     public ChallongeService(PlayerService playerService, GameService gameService, PlayerRepo playerRepo, PlayerMatchRepo playerMatchRepo) {
         this.playerService = playerService;
         this.gameService = gameService;
@@ -56,7 +53,6 @@ public class ChallongeService {
         } catch (Exception e) {
             throw new EntityNotFoundException("Nie znaleziono listy graczy na Challonge");
         }
-
         return allTournamentMatches;
     }
 
@@ -78,7 +74,6 @@ public class ChallongeService {
             throw new EntityNotFoundException("Nie znaleziono turnieju o tej nazwie na Challonge");
         }
 
-
         participantList.sort(new Comparator<>() {
             @Override
             public int compare(ChallongeParticipant o1, ChallongeParticipant o2) {
@@ -95,9 +90,9 @@ public class ChallongeService {
         return participantList;
     }
 
-    public Tournament getTourmanetFromParticipantList(List<TournamentParticipant> participantList, TournamentCategoryEnum tournamentType, String tournamentName, String gamename, String country, Date eventDate) {
-
-
+    public Tournament getTourmanetFromParticipantList(List<TournamentParticipant> participantList,
+                                                      TournamentCategoryEnum tournamentType,
+                                                      String tournamentName, String gamename, String country, Date eventDate) {
         Tournament tournament = new Tournament(tournamentName, tournamentType, gameService.getGameByName(gamename), participantList, country, eventDate);
         participantList.forEach(element -> {
             element.setTournament(tournament);
@@ -108,7 +103,6 @@ public class ChallongeService {
             if (Objects.nonNull(element.getChallongeId())) {
                 player.setChallongeId(element.getChallongeId());
             }
-
             if (element.getPlacement() <= 9) {
                 if (tournamentType == TournamentCategoryEnum.Offline) {
                     element.pointsFromPlacement(element.getPlacement());
@@ -119,7 +113,6 @@ public class ChallongeService {
                     player.setOnlinePoints(element.getPoints() + player.getOnlinePoints());
                 }
             }
-
             element.setPlayer(player);
 
         });
@@ -131,7 +124,8 @@ public class ChallongeService {
         List<PlayerMatch> result = new ArrayList<>();
         var players = playerRepo.findAll();
         players.forEach(player -> {
-            var playerParticipant  = participants.stream().filter(participant -> player.getChallongeId().equals(participant.getChallongeId())).findFirst().orElse(null);
+            var playerParticipant  = participants.stream()
+                    .filter(participant -> player.getChallongeId().equals(participant.getChallongeId())).findFirst().orElse(null);
             getP1PlayerMatches(allMatches, tournament, player, players, result, playerParticipant);
             getP2PlayerMatches(allMatches, tournament, player, players, result , playerParticipant);
         });

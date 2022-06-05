@@ -20,25 +20,25 @@ public class StartConfig {
     private GameRepo gameRepo;
 
     public StartConfig(AppUserRepo appUserRepo, PasswordEncoder passwordEncoder, GameRepo gameRepo ) {
-        this.appUserRepo = appUserRepo;
-
-        AppUser admin = new AppUser();
-        admin.setUsername("jan");
-        admin.setPassword(passwordEncoder.encode("nowak"));
-        admin.setRole("ROLE_ADMIN");
-        admin.setEnabled(true);
-        appUserRepo.save(admin);
-
-        AppUser appUser = new AppUser();
-        appUser.setUsername("marek");
-        appUser.setPassword(passwordEncoder.encode("marek"));
-        appUser.setRole("ROLE_USER");
-        appUser.setEnabled(true);
-        appUserRepo.save(appUser);
-
-        List<Tournament> list = new ArrayList<>();
-        gameRepo.save(new Game("Tekken 7", list));
-        gameRepo.save(new Game("Soul Calibur 6", list));
-        gameRepo.save(new Game("Street Fighter 5", list));
+//        this.appUserRepo = appUserRepo;
+//
+//        AppUser admin = new AppUser();
+//        admin.setUsername("jan");
+//        admin.setPassword(passwordEncoder.encode("nowak"));
+//        admin.setRole("ROLE_ADMIN");
+//        admin.setEnabled(true);
+//        appUserRepo.save(admin);
+//
+//        AppUser appUser = new AppUser();
+//        appUser.setUsername("marek");
+//        appUser.setPassword(passwordEncoder.encode("marek"));
+//        appUser.setRole("ROLE_USER");
+//        appUser.setEnabled(true);
+//        appUserRepo.save(appUser);
+//
+//        List<Tournament> list = new ArrayList<>();
+//        gameRepo.save(new Game("Tekken 7", list));
+//        gameRepo.save(new Game("Soul Calibur 6", list));
+//        gameRepo.save(new Game("Street Fighter 5", list));
     }
 }

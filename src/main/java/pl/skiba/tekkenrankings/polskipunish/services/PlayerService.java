@@ -68,28 +68,34 @@ public class PlayerService {
             var playerMatches = player.getPlayerMatches();
             playerMatches.forEach(playerMatch -> {
                 DataAnalysisDTO dataRecord = new DataAnalysisDTO();
-                dataRecord.setPlayer_nickname(player.getName());
+                dataRecord.setPlayer_nickname(player.getId().toString());
                 dataRecord.setPlayer_offfline_points(player.getOfflinePoints());
                 dataRecord.setPlayer_online_points(player.getOnlinePoints());
                 dataRecord.setResult(playerMatch.getWinner());
                 dataRecord.setRounds(playerMatch.getRound());
                 dataRecord.setPlayer_seed(playerMatch.getSeed().intValue());
-                dataRecord.setPlayer_tournaments_winrate(player.getPlayerTournamentsWinrate());
-                dataRecord.setPlayer_vs_opponent_winrate(player.getPlayerVsPlayerWinrate(playerMatch.getPlayer2()));
-                dataRecord.setPlayer_number_of_all_matches_played(player.getNumberOfAllMatches());
-                dataRecord.setPlayer_number_of_matches_played_in_torunament(player.getNumOfTournamentMatches(playerMatch.getTournament()));
+                dataRecord.setPlayer_tournaments_winrate(
+                        player.getPlayerTournamentsWinrate());
+                dataRecord.setPlayer_vs_opponent_winrate(
+                        player.getPlayerVsPlayerWinrate(playerMatch.getPlayer2()));
+                dataRecord.setPlayer_number_of_all_matches_played(
+                        player.getNumberOfAllMatches());
+                dataRecord.
+                        setPlayer_number_of_matches_played_in_torunament(
+                                player.getNumOfTournamentMatches(playerMatch.getTournament()));
                 getOpponentData(dataRecord, playerMatch);
-
                 dataSet.add(dataRecord);
             });
         });
+
+
 
         return dataSet;
     }
 
     public void getOpponentData(DataAnalysisDTO dataRecord, PlayerMatch playerMatch){
         var opponent = playerMatch.getPlayer2();
-        dataRecord.setOpponent_nickname(opponent.getName());
+        dataRecord.setOpponent_nickname(opponent.getId().toString());
         dataRecord.setOpponent_offline_points(opponent.getOfflinePoints());
         dataRecord.setOpponent_online_points(opponent.getOnlinePoints());
         dataRecord.setOpponent_tournaments_winrate(opponent.getPlayerTournamentsWinrate());

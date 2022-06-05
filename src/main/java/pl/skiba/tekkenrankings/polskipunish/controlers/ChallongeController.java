@@ -43,21 +43,40 @@ public class ChallongeController {
     public String challongeUpload() {
         return "challonge-upload";
     }
-
     @GetMapping("/challonge/tournament")
     public ResponseEntity<String> getTournamentFromChallonge(@RequestParam String tournamentName,
                                                      @RequestParam TournamentCategoryEnum tournamentType,
                                                      @RequestParam String gamename,
                                                      @RequestParam String country,
                                                      @RequestParam @DateTimeFormat(pattern="MM/dd/yyyy") Date eventDate) throws IOException {
-        String url = "https://api.challonge.com/v1/tournaments/" + tournamentName + "/participants.json?api_key=" + challonge_api_key;
-        List<ChallongeParticipant> participantList = challongeService.makeChallongeParticipantsList(url);
-        List<TournamentParticipant> participants = SimpleMapper.INSTANCE.toTournamentParticipantsList(participantList);
-        Tournament tournament = challongeService.getTourmanetFromParticipantList(participants, tournamentType, tournamentName, gamename, country, eventDate);
+
+        String url = "https://api.challonge.com/v1/tournaments/" +
+                tournamentName +
+                "/participants.json?api_key=" +
+                challonge_api_key;
+
+        List<ChallongeParticipant> participantList =
+                challongeService.makeChallongeParticipantsList(url);
+        List<TournamentParticipant> participants =
+                SimpleMapper.INSTANCE.toTournamentParticipantsList(participantList);
+        Tournament tournament =
+                challongeService.getTourmanetFromParticipantList(participants,
+                        tournamentType,
+                        tournamentName,
+                        gamename, country,
+                        eventDate);
+
         tournamentService.save(tournament);
 
-        String matchesUrl = "https://api.challonge.com/v1/tournaments/" + tournamentName + "/matches.json?api_key=" + challonge_api_key + "&tournament=" + tournamentName;
-        List<ChallongePlayerMatch> allMatches = challongeService.makeChallongeMatchesList(matchesUrl);
+        String matchesUrl =
+                "https://api.challonge.com/v1/tournaments/" +
+                        tournamentName +
+                        "/matches.json?api_key=" +
+                        challonge_api_key +
+                        "&tournament=" + tournamentName;
+
+        List<ChallongePlayerMatch> allMatches =
+                challongeService.makeChallongeMatchesList(matchesUrl);
         challongeService.saveChallongeMatches(allMatches , tournament, participants);
 
         return new ResponseEntity<>(HttpStatus.OK);
