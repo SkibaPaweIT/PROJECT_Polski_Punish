@@ -2,6 +2,8 @@
 
 #Spring-Data #MySQL #JPA_Repo #DOCKER
 
+Project is used as my MASTER THESIS subject. It provides source code for it's implementation.
+
 The main goal of a project is to create WebSite Ranking based on Tekke 7 game tournaments. 
 Administrators have posibility to add data from recent tournaments and get rankings.
 
@@ -14,7 +16,8 @@ Recent Utilities:
   -Adding Tournaments and participants from csv files.  
   -Adding Tournaments and particiapants from challonge.com api.  
   -Adding Tournaments and participants from smash.gg api.  
-  
+  -Adding Match predictions using WEKA framework
+  -Adding Data conversion methods
   
   next targets:  
   -Learning new tools like mapper, docker.  
